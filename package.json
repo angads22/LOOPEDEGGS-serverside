@@ -1,0 +1,21 @@
+{
+  "name": "lifeloop-hub",
+  "version": "1.0.0",
+  "description": "LifeLoop Hub — Central server for loopedeggs.ca",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "express-rate-limit": "^7.3.1",
+    "helmet": "^7.1.0",
+    "morgan": "^1.10.0",
+    "ws": "^8.17.1"
+  }
+}

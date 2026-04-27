@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LifeLoop — Set it. Forget it.</title>
+  <meta name="description" content="LifeLoop is a fully automated egg incubator. Computer vision candling, automated dud removal, and intelligent monitoring — without ever opening the chamber. First place Ontario AGrobotics.">
+  <meta property="og:title" content="LifeLoop — Set it. Forget it.">
+  <meta property="og:description" content="The world's first fully automated small-scale egg incubator. Computer vision, zero chamber disruption, 100% automated.">
+  <meta property="og:url" content="https://loopedeggs.ca">
+  <meta property="og:type" content="website">
+  <meta name="theme-color" content="#F5A623">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🥚</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<!-- ── Navigation ─────────────────────────────────────────────────────────── -->
+<nav id="navbar">
+  <div class="nav-container">
+    <a href="#" class="nav-logo">
+      <svg class="logo-ring" width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+        <circle cx="11" cy="11" r="9" stroke="#F5A623" stroke-width="2.2" stroke-dasharray="4 2"/>
+      </svg>
+      LifeLoop
+    </a>
+    <div class="nav-links" id="nav-links">
+      <a href="#problem">Problem</a>
+      <a href="#solution">Solution</a>
+      <a href="#story">Story</a>
+      <a href="#hub">Hub</a>
+      <a href="#invest" class="nav-cta">Get in Touch</a>
+    </div>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ── Hero ───────────────────────────────────────────────────────────────── -->
+<section id="hero">
+  <canvas id="hero-canvas" aria-hidden="true"></canvas>
+  <div class="hero-content">
+    <div class="hero-badges">
+      <span class="badge badge-gold">🥇 1st Place Ontario — AGrobotics</span>
+      <span class="badge">Western Fair District Showcase</span>
+    </div>
+    <h1 class="hero-title">
+      The Future of<br>
+      <span class="gradient-text">Egg Incubation</span>
+    </h1>
+    <p class="hero-tagline">Set it. Forget it.</p>
+    <p class="hero-body">
+      LifeLoop is a fully automated egg incubator — candling, dud removal, turning, and monitoring all happen internally, without ever opening the chamber.
+    </p>
+    <div class="hero-actions">
+      <a href="#problem" class="btn btn-primary">Our Story</a>
+      <a href="#invest" class="btn btn-ghost">Get in Touch</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <span class="stat-value">100%</span>
+        <span class="stat-label">Automated</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat">
+        <span class="stat-value">0</span>
+        <span class="stat-label">Chamber Opens Required</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat">
+        <span class="stat-value">#1</span>
+        <span class="stat-label">Ontario AGrobotics</span>
+      </div>
+    </div>
+  </div>
+  <a href="#problem" class="hero-scroll-hint" aria-label="Scroll down">
+    <span>Scroll to explore</span>
+    <div class="scroll-arrow" aria-hidden="true"></div>
+  </a>
+</section>
+
+<!-- ── Problem ────────────────────────────────────────────────────────────── -->
+<section id="problem" class="section">
+  <div class="container">
+    <div class="section-tag reveal">The Problem</div>
+    <h2 class="section-title reveal">The Flaw Every<br>Farmer Knows</h2>
+    <p class="section-subtitle reveal">Small-scale egg incubators share one consistent, unavoidable flaw — and it's been silently reducing hatch rates for decades.</p>
+
+    <div class="problem-grid">
+      <div class="problem-main reveal">
+        <div class="problem-icon" aria-hidden="true">🔦</div>
+        <h3>Candling Requires Opening</h3>
+        <p>To check egg development, farmers must regularly open the incubator and candle each egg — shining a light through to inspect growth. Non-viable eggs must be removed immediately to prevent rot from spreading to the healthy batch.</p>
+        <p>But every time the incubator opens, the carefully controlled environment is disrupted.</p>
+      </div>
+      <div class="problem-effects">
+        <div class="effect-card reveal">
+          <span class="effect-icon" aria-hidden="true">🌡️</span>
+          <h4>Temperature Spikes</h4>
+          <p>Opening the chamber causes rapid temperature swings that stress developing embryos.</p>
+        </div>
+        <div class="effect-card reveal">
+          <span class="effect-icon" aria-hidden="true">💧</span>
+          <h4>Humidity Loss</h4>
+          <p>Precisely maintained humidity — critical for development — drops the moment the lid opens.</p>
+        </div>
+        <div class="effect-card reveal">
+          <span class="effect-icon" aria-hidden="true">❄️</span>
+          <h4>Worse in Winter</h4>
+          <p>Cold ambient air amplifies fluctuations, making winter incubation especially high-risk.</p>
+        </div>
+        <div class="effect-card reveal">
+          <span class="effect-icon" aria-hidden="true">⏱️</span>
+          <h4>Time Consuming</h4>
+          <p>Manual candling, turning, and monitoring consume hours of a farmer's valuable time.</p>
+        </div>
+      </div>
+    </div>
+
+    <blockquote class="quote-block reveal">
+      <p>"There are no solutions to this problem on the market at a non factory-farm scale."</p>
+      <cite>— Open Spaces Farms, Ontario Community Farm</cite>
+    </blockquote>
+  </div>
+</section>
+
+<!-- ── Solution ───────────────────────────────────────────────────────────── -->
+<section id="solution" class="section section-dark">
+  <div class="container">
+    <div class="section-tag reveal">The Solution</div>
+    <h2 class="section-title reveal">LifeLoop Automates<br><span class="gradient-text">Everything</span></h2>
+    <p class="section-subtitle reveal">Every process that previously required opening the incubator is now handled entirely inside the chamber — automatically.</p>
+
+    <div class="features-grid">
+      <div class="feature-card reveal">
+        <span class="feature-icon" aria-hidden="true">👁️</span>
+        <h3>Computer Vision Candling</h3>
+        <p>Built-in cameras use computer vision to analyze egg development on schedule — no human intervention, zero chamber exposure.</p>
+      </div>
+      <div class="feature-card reveal">
+        <span class="feature-icon" aria-hidden="true">🤖</span>
+        <h3>Automated Dud Removal</h3>
+        <p>Non-viable eggs are automatically identified and removed from the batch, protecting healthy eggs from contamination.</p>
+      </div>
+      <div class="feature-card reveal">
+        <span class="feature-icon" aria-hidden="true">📊</span>
+        <h3>Egg Tracking</h3>
+        <p>Every egg is individually tracked throughout the cycle, giving you full visibility into each embryo's progress.</p>
+      </div>
+      <div class="feature-card reveal">
+        <span class="feature-icon" aria-hidden="true">🔄</span>
+        <h3>Auto-Turning</h3>
+        <p>Eggs are turned at optimal intervals automatically — a critical step for preventing embryo adhesion to the shell.</p>
+      </div>
+      <div class="feature-card reveal">
+        <span class="feature-icon" aria-hidden="true">🔒</span>
+        <h3>Lockdown Phase</h3>
+        <p>The final days of incubation are managed automatically, with conditions optimized for hatching without any intervention.</p>
+      </div>
+      <div class="feature-card reveal">
+        <span class="feature-icon" aria-hidden="true">📱</span>
+        <h3>Companion App</h3>
+        <p>Monitor your entire flock from anywhere. Real-time updates, alerts, and cycle insights — all from your phone.</p>
+      </div>
+    </div>
+
+    <div class="solution-pull reveal">
+      <span class="pull-quote-mark" aria-hidden="true">"</span>
+      Farmers don't need to interact with LifeLoop at all until the incubation cycle completes.
+      <span class="pull-quote-mark" aria-hidden="true">"</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── How It Works ────────────────────────────────────────────────────────── -->
+<section id="how-it-works" class="section">
+  <div class="container">
+    <div class="section-tag reveal">Process</div>
+    <h2 class="section-title reveal">Three Steps.<br>That's It.</h2>
+
+    <div class="steps-container">
+      <div class="step reveal">
+        <div class="step-num">01</div>
+        <div class="step-body">
+          <h3>Load &amp; Start</h3>
+          <p>Place your fertilized eggs in the LifeLoop chamber and start the cycle. That's the only thing you need to do.</p>
+        </div>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">02</div>
+        <div class="step-body">
+          <h3>Automated Monitoring</h3>
+          <p>LifeLoop continuously manages temperature, humidity, turning, and candling. Duds are removed automatically. You receive real-time updates on your phone.</p>
+        </div>
+      </div>
+      <div class="step reveal">
+        <div class="step-num">03</div>
+        <div class="step-body">
+          <h3>Watch Them Hatch</h3>
+          <p>LifeLoop notifies you when hatch day arrives. Open the chamber for the first time since you started — to greet your chicks.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="cycle-timeline reveal">
+      <div class="cycle-label">Typical 21-Day Chicken Incubation Cycle</div>
+      <div class="cycle-bar">
+        <div class="cycle-phase phase-a" style="width:71%"><span>Incubation (Days 1–15)</span></div>
+        <div class="cycle-phase phase-b" style="width:14%"><span>Development (16–18)</span></div>
+        <div class="cycle-phase phase-c" style="width:15%"><span>Lockdown (18–21)</span></div>
+      </div>
+      <div class="cycle-events">
+        <div class="cycle-event" style="left:14%">
+          <div class="ce-dot"></div>
+          <span>Day 3<br>1st Candle</span>
+        </div>
+        <div class="cycle-event" style="left:48%">
+          <div class="ce-dot"></div>
+          <span>Day 10<br>2nd Candle</span>
+        </div>
+        <div class="cycle-event" style="left:82%">
+          <div class="ce-dot ce-lockdown"></div>
+          <span>Day 18<br>Lockdown</span>
+        </div>
+        <div class="cycle-event" style="left:98%">
+          <div class="ce-dot ce-hatch"></div>
+          <span>Day 21<br>🐣 Hatch</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Story ──────────────────────────────────────────────────────────────── -->
+<section id="story" class="section section-dark">
+  <div class="container">
+    <div class="section-tag reveal">Our Journey</div>
+    <h2 class="section-title reveal">From Farm Problem<br>to <span class="gradient-text">Provincial Champion</span></h2>
+
+    <div class="story-timeline">
+
+      <div class="st-item reveal">
+        <div class="st-dot"></div>
+        <div class="st-content">
+          <span class="st-date">The Beginning</span>
+          <h3>A Real Problem at a Real Farm</h3>
+          <p>We visited <strong>Open Spaces Farms</strong> — a real community farm in Ontario — to identify hard agricultural problems for the AGrobotics robotics competition. The candling problem stood out immediately: the farm told us flatly there were no solutions at a non-factory scale.</p>
+        </div>
+      </div>
+
+      <div class="st-item reveal">
+        <div class="st-dot"></div>
+        <div class="st-content">
+          <span class="st-date">AGrobotics Entry</span>
+          <h3>LifeLoop Is Born</h3>
+          <p>We designed and built the first LifeLoop prototype — a fully automated incubator that performs every process internally. Candling via computer vision. Automated dud removal. Zero chamber exposure required.</p>
+        </div>
+      </div>
+
+      <div class="st-item reveal">
+        <div class="st-dot"></div>
+        <div class="st-content">
+          <span class="st-date">Provincial Finalist</span>
+          <h3>One of Six Teams Selected</h3>
+          <p>LifeLoop was chosen as a provincial finalist — one of only <strong>six teams</strong> across Ontario selected to present at the <strong>Western Fair District Agricultural Showcase</strong>.</p>
+        </div>
+      </div>
+
+      <div class="st-item reveal">
+        <div class="st-dot"></div>
+        <div class="st-content">
+          <span class="st-date">The Showcase</span>
+          <h3>Real Farmers. Real Demand.</h3>
+          <p>Presenting to actual farmers and AGtech CEOs made the commercial potential undeniable. Multiple industry leaders — including the judges — encouraged us to take LifeLoop beyond a competition project.</p>
+        </div>
+      </div>
+
+      <div class="st-item st-gold reveal">
+        <div class="st-dot st-dot-gold"></div>
+        <div class="st-content">
+          <span class="st-date">March — AGrobotics Finals</span>
+          <h3>🥇 First Place — Ontario</h3>
+          <p>LifeLoop won <strong>first place across Ontario</strong>. The win confirmed what we were already beginning to understand — this project had genuine startup potential.</p>
+        </div>
+      </div>
+
+      <div class="st-item reveal">
+        <div class="st-dot"></div>
+        <div class="st-content">
+          <span class="st-date">Now — Building V3</span>
+          <h3>Taking It to Market</h3>
+          <p>We've been doing serious market validation: emailing farmers, meeting startup investors, and analyzing competitors. We've decided to build <strong>LifeLoop V3</strong> — a market-ready product. We're now seeking funding, strategic guidance, and industry connections.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── Hub ────────────────────────────────────────────────────────────────── -->
+<section id="hub" class="section">
+  <div class="container">
+    <div class="section-tag reveal">The Hub</div>
+    <h2 class="section-title reveal">Monitor Every LifeLoop<br>From One Place</h2>
+    <p class="section-subtitle reveal">The LifeLoop Hub connects all your incubators into a single real-time dashboard — accessible from anywhere.</p>
+
+    <div class="hub-mockup reveal">
+      <div class="hm-titlebar">
+        <div class="hm-dots" aria-hidden="true"><span></span><span></span><span></span></div>
+        <span class="hm-url">loopedeggs.ca — LifeLoop Hub</span>
+      </div>
+      <div class="hm-body">
+        <nav class="hm-sidebar" aria-label="Mock sidebar">
+          <div class="hm-nav active">Dashboard</div>
+          <div class="hm-nav">Incubators</div>
+          <div class="hm-nav">Analytics</div>
+          <div class="hm-nav">Alerts</div>
+          <div class="hm-nav">Settings</div>
+        </nav>
+        <div class="hm-main">
+          <div class="hm-stats">
+            <div class="hm-stat"><span class="hm-val">247</span><span class="hm-lbl">Active Eggs</span></div>
+            <div class="hm-stat"><span class="hm-val">3</span><span class="hm-lbl">Incubators Online</span></div>
+            <div class="hm-stat"><span class="hm-val">94%</span><span class="hm-lbl">Est. Hatch Rate</span></div>
+          </div>
+          <div class="hm-units">
+            <div class="hm-unit">
+              <div class="hm-unit-head">
+                <span class="hm-unit-name">Barn Unit A</span>
+                <span class="hm-badge online">Online</span>
+              </div>
+              <div class="hm-unit-data">
+                <span>🌡️ 37.5°C</span><span>💧 55%</span><span>🥚 82 eggs</span><span>📅 Day 12</span>
+              </div>
+              <div class="hm-bar-bg"><div class="hm-bar" style="width:57%"></div></div>
+            </div>
+            <div class="hm-unit">
+              <div class="hm-unit-head">
+                <span class="hm-unit-name">Coop Unit B</span>
+                <span class="hm-badge online">Online</span>
+              </div>
+              <div class="hm-unit-data">
+                <span>🌡️ 37.5°C</span><span>💧 57%</span><span>🥚 96 eggs</span><span>📅 Day 7</span>
+              </div>
+              <div class="hm-bar-bg"><div class="hm-bar" style="width:33%"></div></div>
+            </div>
+            <div class="hm-unit">
+              <div class="hm-unit-head">
+                <span class="hm-unit-name">Storage Unit C</span>
+                <span class="hm-badge lockdown">Lockdown</span>
+              </div>
+              <div class="hm-unit-data">
+                <span>🌡️ 37.8°C</span><span>💧 65%</span><span>🥚 69 eggs</span><span>📅 Day 19</span>
+              </div>
+              <div class="hm-bar-bg"><div class="hm-bar hm-bar-lock" style="width:90%"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="hub-note reveal">Full Hub integration shipping with LifeLoop V3</p>
+  </div>
+</section>
+
+<!-- ── Invest ──────────────────────────────────────────────────────────────── -->
+<section id="invest" class="section section-dark">
+  <div class="container">
+    <div class="section-tag reveal">Join Us</div>
+    <h2 class="section-title reveal">We're Building the Future<br>of <span class="gradient-text">Small-Scale Agriculture</span></h2>
+    <p class="section-subtitle reveal">LifeLoop V3 is in active development. We're looking for the right people to help bring it to market.</p>
+
+    <div class="seek-grid">
+      <div class="seek-card reveal">
+        <span class="seek-icon" aria-hidden="true">💰</span>
+        <h3>Funding</h3>
+        <p>Seed funding to accelerate LifeLoop V3 development, manufacturing, and go-to-market strategy.</p>
+      </div>
+      <div class="seek-card reveal">
+        <span class="seek-icon" aria-hidden="true">🧭</span>
+        <h3>Strategic Guidance</h3>
+        <p>Experienced advisors in agriculture, hardware, and deep-tech startups to guide our path to market.</p>
+      </div>
+      <div class="seek-card reveal">
+        <span class="seek-icon" aria-hidden="true">🤝</span>
+        <h3>Industry Connections</h3>
+        <p>Introductions to farmers, agricultural co-ops, distributors, and key players in small-scale agriculture.</p>
+      </div>
+    </div>
+
+    <div class="contact-box reveal">
+      <h3 class="contact-box-title">Get in Touch</h3>
+      <form id="contact-form" novalidate>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" placeholder="Your name" required autocomplete="name">
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="you@example.com" required autocomplete="email">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="subject">I'm interested in</label>
+          <select id="subject" name="subject">
+            <option value="investing">Investing in LifeLoop</option>
+            <option value="advising">Advising / Mentorship</option>
+            <option value="partnership">Industry Partnership</option>
+            <option value="product">The Product / Pre-order Interest</option>
+            <option value="other">Something Else</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="4" placeholder="Tell us about yourself and how you'd like to connect…"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary btn-full">Send Message</button>
+        <div id="form-status" class="form-status" role="alert" aria-live="polite"></div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ── Footer ─────────────────────────────────────────────────────────────── -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <svg width="18" height="18" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+            <circle cx="11" cy="11" r="9" stroke="#F5A623" stroke-width="2.2" stroke-dasharray="4 2"/>
+          </svg>
+          LifeLoop
+        </div>
+        <p>The world's first fully automated small-scale egg incubator.</p>
+        <p class="footer-slogan">Set it. Forget it.</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>Product</h4>
+          <a href="#problem">The Problem</a>
+          <a href="#solution">Solution</a>
+          <a href="#how-it-works">How It Works</a>
+          <a href="#hub">The Hub</a>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <a href="#story">Our Story</a>
+          <a href="#invest">Investors</a>
+          <a href="#invest">Contact</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2024 LifeLoop · loopedeggs.ca</span>
+      <span>🥇 1st Place Ontario — AGrobotics</span>
+    </div>
+  </div>
+</footer>
+
+<script src="/js/main.js"></script>
+</body>
+</html>
