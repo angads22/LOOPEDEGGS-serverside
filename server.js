@@ -12,6 +12,7 @@ const { WebSocketServer } = require('ws');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const APP_VERSION = '1.0.1';
 
 // Persist contacts to disk
 const DATA_DIR = path.join(__dirname, 'data');
@@ -154,7 +155,7 @@ app.get('/health', (req, res) => {
   res.status(200).json({
     status: 'ok',
     service: 'lifeloop',
-    version: '1.0.1',
+    version: APP_VERSION,
   });
 });
 
