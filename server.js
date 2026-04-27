@@ -150,6 +150,14 @@ app.post('/api/hub/incubators/:deviceId/telemetry', (req, res) => {
   res.json({ success: true });
 });
 
+app.get('/health', (req, res) => {
+  res.status(200).json({
+    status: 'ok',
+    service: 'lifeloop',
+    version: '1.0.1',
+  });
+});
+
 // SPA fallback
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
