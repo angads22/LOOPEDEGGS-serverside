@@ -72,7 +72,7 @@ document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
       ctx.globalAlpha = Math.max(0, this.alpha);
       ctx.beginPath();
       ctx.ellipse(this.x, this.y, this.r * 0.68, this.r, 0, 0, Math.PI * 2);
-      ctx.fillStyle = '#F5A623';
+      ctx.fillStyle = '#5C8B3A';
       ctx.fill();
       ctx.restore();
     }
@@ -88,8 +88,8 @@ document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
       canvas.width * .5, canvas.height * .42, 0,
       canvas.width * .5, canvas.height * .42, canvas.width * .6
     );
-    grd.addColorStop(0,   'rgba(245,166,35,0.04)');
-    grd.addColorStop(0.5, 'rgba(245,120,20,0.02)');
+    grd.addColorStop(0,   'rgba(92,139,58,0.06)');
+    grd.addColorStop(0.5, 'rgba(61,107,46,0.02)');
     grd.addColorStop(1,   'transparent');
     ctx.fillStyle = grd;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
