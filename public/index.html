@@ -3,14 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LifeLoop: Set it. Forget it.</title>
-  <meta name="description" content="LifeLoop is a fully automated egg incubator. Computer vision candling, automated dud removal, and intelligent monitoring, without ever opening the chamber. First place Ontario AGrobotics.">
-  <meta property="og:title" content="LifeLoop: Set it. Forget it.">
-  <meta property="og:description" content="The world's first fully automated small-scale egg incubator. Computer vision, zero chamber disruption, 100% automated.">
-  <meta property="og:url" content="https://loopedeggs.ca">
+  <title>STEMroots: Student-led STEM nonprofit</title>
+  <meta name="description" content="STEMroots is a student-led STEM nonprofit running free, hands-on workshops and camps for students aged 4-12 across Ontario.">
+  <meta property="og:title" content="STEMroots: Student-led STEM nonprofit">
+  <meta property="og:description" content="Free, hands-on STEM workshops and programs for students aged 4-12. Inspiring the next generation of critical thinkers, innovators, and trailblazers.">
   <meta property="og:type" content="website">
   <meta name="theme-color" content="#5A8C36">
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🥚</text></svg>">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌱</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -25,14 +24,14 @@
       <svg class="logo-ring" width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
         <circle cx="11" cy="11" r="9" stroke="#5A8C36" stroke-width="2.2" stroke-dasharray="4 2"/>
       </svg>
-      LifeLoop
+      STEMroots
     </a>
     <div class="nav-links" id="nav-links">
-      <a href="#problem">Problem</a>
-      <a href="#solution">Solution</a>
-      <a href="#story">Story</a>
-      <a href="#hub">Hub</a>
-      <a href="https://www.instagram.com/lifeloop_tech?igsh=MWljY2FnbmtnOTJlaQ==" target="_blank" rel="noopener" class="nav-cta">Follow Us</a>
+      <a href="#about">About</a>
+      <a href="#programs">Programs</a>
+      <a href="#locations">Locations</a>
+      <a href="#contact">Contact</a>
+      <a href="https://www.instagram.com/" target="_blank" rel="noopener" class="nav-cta">Follow Us</a>
     </div>
     <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
       <span></span><span></span><span></span>
@@ -45,395 +44,258 @@
   <canvas id="hero-canvas" aria-hidden="true"></canvas>
   <div class="hero-content">
     <div class="hero-badges">
-      <span class="badge badge-gold">🥇 1st Place Ontario, AGrobotics</span>
-      <span class="badge">Western Fair District Showcase</span>
+      <span class="badge badge-gold">🌱 Student-led STEM nonprofit</span>
     </div>
     <h1 class="hero-title">
-      The Future of<br>
-      <span class="gradient-text">Egg Incubation</span>
+      Inspiring the Next<br>
+      <span class="gradient-text">Generation</span>
     </h1>
-    <p class="hero-tagline">Set it. Forget it.</p>
+    <p class="hero-tagline">of critical thinkers, innovators, and trailblazers.</p>
     <p class="hero-body">
-      LifeLoop is a fully automated egg incubator. Candling, dud removal, turning, and monitoring all happen internally, without ever opening the chamber.
+      STEMroots brings free, hands-on STEM workshops and programs for students aged 4-12, designed to spark curiosity and encourage innovation.
     </p>
     <div class="hero-actions">
-      <a href="#problem" class="btn btn-primary">Our Story</a>
-      <a href="https://www.instagram.com/lifeloop_tech?igsh=MWljY2FnbmtnOTJlaQ==" target="_blank" rel="noopener" class="btn btn-ghost">Follow Us</a>
+      <a href="#programs" class="btn btn-primary">Our Programs</a>
+      <a href="#contact" class="btn btn-ghost">Get in Touch</a>
     </div>
     <div class="hero-stats">
       <div class="stat">
+        <span class="stat-value" data-counter data-target="50" data-prefix="" data-suffix="+">50+</span>
+        <span class="stat-label">Free Camps Run</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat">
         <span class="stat-value" data-counter data-target="100" data-prefix="" data-suffix="%">100%</span>
-        <span class="stat-label">Automated</span>
+        <span class="stat-label">Student Led</span>
       </div>
       <div class="stat-divider"></div>
       <div class="stat">
-        <span class="stat-value" data-counter data-target="0" data-prefix="" data-suffix="">0</span>
-        <span class="stat-label">Chamber Opens Required</span>
-      </div>
-      <div class="stat-divider"></div>
-      <div class="stat">
-        <span class="stat-value" data-counter data-target="1" data-prefix="#" data-suffix="">#1</span>
-        <span class="stat-label">Ontario AGrobotics</span>
+        <span class="stat-value">4-12</span>
+        <span class="stat-label">Ages Served</span>
       </div>
     </div>
+    <p class="hero-mission">
+      Our mission is to make STEM education accessible and entertaining for youth through hands-on experiments.
+    </p>
   </div>
-  <a href="#problem" class="hero-scroll-hint" aria-label="Scroll down">
+  <a href="#carousel" class="hero-scroll-hint" aria-label="Scroll down">
     <span>Scroll to explore</span>
     <div class="scroll-arrow" aria-hidden="true"></div>
   </a>
 </section>
 
-<!-- Problem -->
-<section id="problem" class="section">
+<!-- Highlights / Carousel -->
+<section id="carousel" class="section">
   <div class="container">
-    <div class="section-tag reveal">The Problem</div>
-    <h2 class="section-title reveal">The Flaw Every<br>Farmer Knows</h2>
-    <p class="section-subtitle reveal">Small-scale egg incubators share one consistent, unavoidable flaw — and it's been silently reducing hatch rates for decades.</p>
+    <div class="section-tag reveal">Highlights</div>
+    <h2 class="section-title reveal">A Quick Look at<br><span class="gradient-text">STEMroots</span></h2>
+    <p class="section-subtitle reveal">Snapshots from our camps, our team, and the milestones that keep us going.</p>
+  </div>
+
+  <div class="carousel-track-wrapper reveal">
+    <div class="carousel-track">
+
+      <div class="carousel-card carousel-logo">
+        <div class="cl-ring">
+          <svg width="80" height="80" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+            <circle cx="11" cy="11" r="9" stroke="#5A8C36" stroke-width="2.2" stroke-dasharray="4 2"/>
+          </svg>
+        </div>
+        <span class="cl-name">STEMroots</span>
+      </div>
+
+      <div class="carousel-card carousel-photo">
+        <div class="cp-img" aria-hidden="true">🎉</div>
+        <div class="cp-overlay">
+          <span class="cp-tag">Milestone</span>
+          <h3>Over 50 Free Camps Run</h3>
+        </div>
+      </div>
+
+      <div class="carousel-card carousel-photo">
+        <div class="cp-img" aria-hidden="true">👩‍🎓</div>
+        <div class="cp-overlay">
+          <span class="cp-tag">Team</span>
+          <h3>Student Led + Designed</h3>
+        </div>
+      </div>
+
+      <div class="carousel-card carousel-photo">
+        <div class="cp-img" aria-hidden="true">🧪</div>
+        <div class="cp-overlay">
+          <span class="cp-tag">Experience</span>
+          <h3>Hands-on Fun, No Worksheets!</h3>
+        </div>
+      </div>
+
+      <div class="carousel-card carousel-news">
+        <div class="cn-placeholder" aria-hidden="true">
+          <span>📰</span>
+          <small>News photo placeholder</small>
+        </div>
+        <div class="cp-overlay">
+          <span class="cp-tag">Press</span>
+          <h3>MDHS Crossover</h3>
+        </div>
+      </div>
+
+      <div class="carousel-card carousel-news">
+        <div class="cn-placeholder" aria-hidden="true">
+          <span>🎤</span>
+          <small>News photo placeholder</small>
+        </div>
+        <div class="cp-overlay">
+          <span class="cp-tag">Press</span>
+          <h3>TEDx Talk</h3>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- About -->
+<section id="about" class="section section-dark">
+  <div class="container">
+    <div class="section-tag reveal">About Us</div>
+    <h2 class="section-title reveal">Built by Students,<br>for <span class="gradient-text">Students</span></h2>
 
     <div class="problem-grid">
       <div class="problem-main reveal">
-        <div class="problem-icon" aria-hidden="true">🔦</div>
-        <h3>Candling Requires Opening</h3>
-        <p>To check egg development, farmers must regularly open the incubator and candle each egg, shining a light through to inspect growth. Non-viable eggs must be removed immediately to prevent rot from spreading to the healthy batch.</p>
-        <p>But every time the incubator opens, the carefully controlled environment is disrupted.</p>
+        <div class="problem-icon" aria-hidden="true">🌱</div>
+        <h3>Our Story</h3>
+        <p>STEMroots is a student-led nonprofit organization that runs STEM camps and workshops at schools across Ontario. As of April 2026, we have run over 50 free camps at local Montessori schools, public schools, and high schools.</p>
+        <p>Started by 3 motivated high school students, STEMroots has rapidly scaled into a trusted organization that brings quality interactive camps across a variety of fields, such as robotics and engineering.</p>
       </div>
       <div class="problem-effects">
         <div class="effect-card reveal">
-          <span class="effect-icon" aria-hidden="true">🌡️</span>
-          <h4>Temperature Spikes</h4>
-          <p>Opening the chamber causes rapid temperature swings that stress developing embryos.</p>
+          <span class="effect-icon" aria-hidden="true">🆓</span>
+          <h4>Always Free</h4>
+          <p>Every camp and workshop we run is completely free to schools and students.</p>
         </div>
         <div class="effect-card reveal">
-          <span class="effect-icon" aria-hidden="true">💧</span>
-          <h4>Humidity Loss</h4>
-          <p>Humidity, critical for development, drops the moment the lid opens.</p>
+          <span class="effect-icon" aria-hidden="true">🤝</span>
+          <h4>Trusted Partner</h4>
+          <p>Working with Montessori schools, public schools, and high schools across Ontario.</p>
         </div>
         <div class="effect-card reveal">
-          <span class="effect-icon" aria-hidden="true">❄️</span>
-          <h4>Worse in Winter</h4>
-          <p>Cold ambient air amplifies fluctuations, making winter incubation especially high-risk.</p>
+          <span class="effect-icon" aria-hidden="true">🚀</span>
+          <h4>Rapid Growth</h4>
+          <p>From 3 students to a province-wide network in just a few short years.</p>
         </div>
         <div class="effect-card reveal">
-          <span class="effect-icon" aria-hidden="true">⏱️</span>
-          <h4>Time Consuming</h4>
-          <p>Manual candling, turning, and monitoring consume hours of a farmer's valuable time.</p>
-        </div>
-      </div>
-    </div>
-
-    <blockquote class="quote-block reveal">
-      <p>"There are no solutions to this problem on the market at a non factory-farm scale."</p>
-      <cite>— Open Spaces Farms, Ontario Community Farm</cite>
-    </blockquote>
-  </div>
-</section>
-
-<!-- Solution -->
-<section id="solution" class="section section-dark">
-  <div class="container">
-    <div class="section-tag reveal">The Solution</div>
-    <h2 class="section-title reveal">LifeLoop Automates<br><span class="gradient-text">Everything</span></h2>
-    <p class="section-subtitle reveal">Every process that previously required opening the incubator is now handled entirely inside the chamber, automatically.</p>
-
-    <div class="features-grid">
-      <div class="feature-card reveal">
-        <span class="feature-icon" aria-hidden="true">👁️</span>
-        <h3>Computer Vision Candling</h3>
-        <p>Built-in cameras use computer vision to analyze egg development on schedule, no human intervention, zero chamber exposure.</p>
-      </div>
-      <div class="feature-card reveal">
-        <span class="feature-icon" aria-hidden="true">🤖</span>
-        <h3>Automated Dud Removal</h3>
-        <p>Non-viable eggs are automatically identified and removed from the batch, protecting healthy eggs from contamination.</p>
-      </div>
-      <div class="feature-card reveal">
-        <span class="feature-icon" aria-hidden="true">📊</span>
-        <h3>Egg Tracking</h3>
-        <p>Every egg is individually tracked throughout the cycle, giving you full visibility into each embryo's progress.</p>
-      </div>
-      <div class="feature-card reveal">
-        <span class="feature-icon" aria-hidden="true">🔄</span>
-        <h3>Auto-Turning</h3>
-        <p>Eggs are turned at optimal intervals automatically, a critical step for preventing embryo adhesion to the shell.</p>
-      </div>
-      <div class="feature-card reveal">
-        <span class="feature-icon" aria-hidden="true">🔒</span>
-        <h3>Lockdown Phase</h3>
-        <p>The final days of incubation are managed automatically, with conditions optimized for hatching without any intervention.</p>
-      </div>
-      <div class="feature-card reveal">
-        <span class="feature-icon" aria-hidden="true">📱</span>
-        <h3>Companion App</h3>
-        <p>Monitor your entire flock from anywhere. Real-time updates, alerts, and cycle insights, all from your phone.</p>
-      </div>
-    </div>
-
-    <div class="solution-pull reveal">
-      <span class="pull-quote-mark" aria-hidden="true">"</span>
-      Farmers don't need to interact with LifeLoop at all until the incubation cycle completes.
-      <span class="pull-quote-mark" aria-hidden="true">"</span>
-    </div>
-  </div>
-</section>
-
-<!-- How It Works -->
-<section id="how-it-works" class="section">
-  <div class="container">
-    <div class="section-tag reveal">Process</div>
-    <h2 class="section-title reveal">Three Steps.<br>That's It.</h2>
-
-    <div class="steps-container">
-      <div class="step reveal">
-        <div class="step-num">01</div>
-        <div class="step-body">
-          <h3>Load &amp; Start</h3>
-          <p>Place your fertilized eggs in the LifeLoop chamber and start the cycle. That's the only thing you need to do.</p>
-        </div>
-      </div>
-      <div class="step reveal">
-        <div class="step-num">02</div>
-        <div class="step-body">
-          <h3>Automated Monitoring</h3>
-          <p>LifeLoop continuously manages temperature, humidity, turning, and candling. Duds are removed automatically. You receive real-time updates on your phone.</p>
-        </div>
-      </div>
-      <div class="step reveal">
-        <div class="step-num">03</div>
-        <div class="step-body">
-          <h3>Watch Them Hatch</h3>
-          <p>LifeLoop notifies you when hatch day arrives. Open the chamber for the first time since you started, to greet your chicks.</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="cycle-timeline reveal">
-      <div class="cycle-label">Typical 21-Day Chicken Incubation Cycle</div>
-      <div class="cycle-bar">
-        <div class="cycle-phase phase-a" data-width="71%"><span>Incubation (Days 1–15)</span></div>
-        <div class="cycle-phase phase-b" data-width="14%"><span>Development (16–18)</span></div>
-        <div class="cycle-phase phase-c" data-width="15%"><span>Lockdown (18–21)</span></div>
-      </div>
-      <div class="cycle-events">
-        <div class="cycle-event" style="left:14%">
-          <div class="ce-dot"></div>
-          <span>Day 3<br>1st Candle</span>
-        </div>
-        <div class="cycle-event" style="left:48%">
-          <div class="ce-dot"></div>
-          <span>Day 10<br>2nd Candle</span>
-        </div>
-        <div class="cycle-event" style="left:82%">
-          <div class="ce-dot ce-lockdown"></div>
-          <span>Day 18<br>Lockdown</span>
-        </div>
-        <div class="cycle-event" style="left:98%">
-          <div class="ce-dot ce-hatch"></div>
-          <span>Day 21<br>🐣 Hatch</span>
+          <span class="effect-icon" aria-hidden="true">🔬</span>
+          <h4>Real Experiments</h4>
+          <p>Robotics, engineering, biology and beyond, always hands-on, never just slides.</p>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Story -->
-<section id="story" class="section section-dark">
+<!-- Programs -->
+<section id="programs" class="section">
   <div class="container">
-    <div class="section-tag reveal">Our Journey</div>
-    <h2 class="section-title reveal">From Farm Problem<br>to <span class="gradient-text">Provincial Champion</span></h2>
+    <div class="section-tag reveal">Programs</div>
+    <h2 class="section-title reveal">Lessons That<br><span class="gradient-text">Stick With Kids</span></h2>
+    <p class="section-subtitle reveal">All STEMroots lessons combine an informational presentation with a hands-on experiment. We have a variety of premade lessons, but we're also happy to design custom lessons to match your curriculum. We offer one-off lessons or multi-week programs.</p>
 
-    <div class="story-timeline">
+    <div class="programs-list">
 
-      <div class="st-item reveal">
-        <div class="st-dot"></div>
-        <div class="st-content">
-          <span class="st-date">The Beginning</span>
-          <h3>A Real Problem at a Real Farm</h3>
-          <p>We visited <strong>Open Spaces Farms</strong>, a real community farm in Ontario, to identify hard agricultural problems for the AGrobotics robotics competition. The candling problem stood out immediately: the farm told us flatly there were no solutions at a non-factory scale.</p>
-        </div>
-      </div>
+      <details class="program reveal">
+        <summary>
+          <span class="program-icon" aria-hidden="true">🧪</span>
+          <span class="program-name">Science</span>
+          <span class="program-chev" aria-hidden="true"></span>
+        </summary>
+        <ul class="program-items">
+          <li><strong>Chemical Reactions</strong> — Building lava lamps + invisible ink</li>
+          <li><strong>Introduction to Physics</strong> — Egg drop</li>
+          <li><strong>Biology &amp; Plant Anatomy</strong> — Growing bean plants in different environments + coloured celery</li>
+        </ul>
+      </details>
 
-      <div class="st-item reveal">
-        <div class="st-dot"></div>
-        <div class="st-content">
-          <span class="st-date">AGrobotics Entry</span>
-          <h3>LifeLoop Is Born</h3>
-          <p>We designed and built the first LifeLoop prototype: a fully automated incubator that performs every process internally. Candling via computer vision. Automated dud removal. Zero chamber exposure required.</p>
-        </div>
-      </div>
+      <details class="program reveal">
+        <summary>
+          <span class="program-icon" aria-hidden="true">🛠️</span>
+          <span class="program-name">Engineering</span>
+          <span class="program-chev" aria-hidden="true"></span>
+        </summary>
+        <ul class="program-items">
+          <li><strong>Engineering to Solve Problems</strong> — Building boats</li>
+          <li><strong>Engineering to Solve Problems</strong> — Building bridges</li>
+          <li><strong>Engineering &amp; Design</strong> — Egg drop</li>
+        </ul>
+      </details>
 
-      <div class="st-item reveal">
-        <div class="st-dot"></div>
-        <div class="st-content">
-          <span class="st-date">Provincial Finalist</span>
-          <h3>One of Six Teams Selected</h3>
-          <p>LifeLoop was chosen as a provincial finalist, one of only <strong>six teams</strong> across Ontario selected to present at the <strong>Western Fair District Agricultural Showcase</strong>.</p>
-        </div>
-      </div>
-
-      <div class="st-item reveal">
-        <div class="st-dot"></div>
-        <div class="st-content">
-          <span class="st-date">The Showcase</span>
-          <h3>Real Farmers. Real Demand.</h3>
-          <p>Presenting to actual farmers and AGtech CEOs made the commercial potential undeniable. Multiple industry leaders, including the judges, encouraged us to take LifeLoop beyond a competition project.</p>
-        </div>
-      </div>
-
-      <div class="st-item st-gold reveal">
-        <div class="st-dot st-dot-gold"></div>
-        <div class="st-content">
-          <span class="st-date">March, AGrobotics Finals</span>
-          <h3>🥇 First Place, Ontario</h3>
-          <p>LifeLoop won <strong>first place across Ontario</strong>. The win confirmed what we were already beginning to understand — this project had genuine startup potential.</p>
-        </div>
-      </div>
-
-      <div class="st-item reveal">
-        <div class="st-dot"></div>
-        <div class="st-content">
-          <span class="st-date">Now: Building V3</span>
-          <h3>Taking It to Market</h3>
-          <p>We've been doing serious market validation: emailing farmers, meeting startup investors, and analyzing competitors. We've decided to build <strong>LifeLoop V3</strong> — a market-ready product. We're now seeking funding, strategic guidance, and industry connections.</p>
-        </div>
-      </div>
+      <details class="program reveal">
+        <summary>
+          <span class="program-icon" aria-hidden="true">💻</span>
+          <span class="program-name">Technology</span>
+          <span class="program-chev" aria-hidden="true"></span>
+        </summary>
+        <ul class="program-items">
+          <li><strong>Fundamentals of Robotics</strong> — Interactive game</li>
+          <li><strong>Technology in Our World</strong> — Building circuits</li>
+          <li><strong>Coding</strong> — Coding with Scratch</li>
+        </ul>
+      </details>
 
     </div>
   </div>
 </section>
 
-<!-- Hub -->
-<section id="hub" class="section">
+<!-- Locations -->
+<section id="locations" class="section section-dark">
   <div class="container">
-    <h2 class="section-title reveal">Monitor Every LifeLoop<br>From One Place</h2>
-    <p class="section-subtitle reveal">The LifeLoop Hub connects all your incubators into a single real-time dashboard, accessible from anywhere.</p>
+    <div class="section-tag reveal">Locations</div>
+    <h2 class="section-title reveal">Where You'll<br><span class="gradient-text">Find Us</span></h2>
 
-    <div class="hub-mockup reveal">
-      <div class="hm-titlebar">
-        <div class="hm-dots" aria-hidden="true"><span></span><span></span><span></span></div>
-        <span class="hm-url">loopedeggs.ca — LifeLoop Hub</span>
+    <div class="locations-grid">
+      <div class="location-card reveal">
+        <div class="loc-pin" aria-hidden="true">📍</div>
+        <h3>Milton, Ontario</h3>
+        <p>Our home chapter, running free camps and workshops at schools across the Milton area.</p>
+        <span class="loc-status">Active Chapter</span>
       </div>
-      <div class="hm-body">
-        <nav class="hm-sidebar" aria-label="Mock sidebar">
-          <div class="hm-nav active">Dashboard</div>
-          <div class="hm-nav">Incubators</div>
-          <div class="hm-nav">Analytics</div>
-          <div class="hm-nav">Alerts</div>
-          <div class="hm-nav">Settings</div>
-        </nav>
-        <div class="hm-main">
-          <div class="hm-stats">
-            <div class="hm-stat"><span class="hm-val">247</span><span class="hm-lbl">Active Eggs</span></div>
-            <div class="hm-stat"><span class="hm-val">3</span><span class="hm-lbl">Incubators Online</span></div>
-            <div class="hm-stat"><span class="hm-val">94%</span><span class="hm-lbl">Est. Hatch Rate</span></div>
-          </div>
-          <div class="hm-units">
-            <div class="hm-unit">
-              <div class="hm-unit-head">
-                <span class="hm-unit-name">Barn Unit A</span>
-                <span class="hm-badge online">Online</span>
-              </div>
-              <div class="hm-unit-data">
-                <span>🌡️ 37.5°C</span><span>💧 55%</span><span>🥚 82 eggs</span><span>📅 Day 12</span>
-              </div>
-              <div class="hm-bar-bg"><div class="hm-bar" data-width="57%"></div></div>
-            </div>
-            <div class="hm-unit">
-              <div class="hm-unit-head">
-                <span class="hm-unit-name">Coop Unit B</span>
-                <span class="hm-badge online">Online</span>
-              </div>
-              <div class="hm-unit-data">
-                <span>🌡️ 37.5°C</span><span>💧 57%</span><span>🥚 96 eggs</span><span>📅 Day 7</span>
-              </div>
-              <div class="hm-bar-bg"><div class="hm-bar" data-width="33%"></div></div>
-            </div>
-            <div class="hm-unit">
-              <div class="hm-unit-head">
-                <span class="hm-unit-name">Storage Unit C</span>
-                <span class="hm-badge lockdown">Lockdown</span>
-              </div>
-              <div class="hm-unit-data">
-                <span>🌡️ 37.8°C</span><span>💧 65%</span><span>🥚 69 eggs</span><span>📅 Day 19</span>
-              </div>
-              <div class="hm-bar-bg"><div class="hm-bar hm-bar-lock" data-width="90%"></div></div>
-            </div>
-          </div>
-        </div>
+
+      <div class="location-card location-soon reveal">
+        <div class="loc-pin" aria-hidden="true">✨</div>
+        <h3>More Chapters Coming Soon</h3>
+        <p>We're expanding! Want to bring STEMroots to your community? Get in touch.</p>
+        <span class="loc-status loc-status-soon">Expanding</span>
       </div>
     </div>
-    <p class="hub-note reveal">Full integration shipping with LifeLoop V3</p>
   </div>
 </section>
 
-<!-- Connect -->
-<section id="invest" class="section section-dark">
+<!-- Contact -->
+<section id="contact" class="section">
   <div class="container">
-    <div class="section-tag reveal">Join Us</div>
-    <h2 class="section-title reveal">We're Building the Future<br>of <span class="gradient-text">Small-Scale Agriculture</span></h2>
-    <p class="section-subtitle reveal">LifeLoop V3 is in active development. Follow our journey and be the first to know when it launches.</p>
+    <div class="section-tag reveal">Get in Touch</div>
+    <h2 class="section-title reveal">Bring STEMroots<br>to <span class="gradient-text">Your School</span></h2>
+    <p class="section-subtitle reveal">Want to host a camp, partner with us, or just say hi? We'd love to hear from you.</p>
 
-    <div class="seek-grid">
-      <div class="seek-card reveal">
-        <span class="seek-icon" aria-hidden="true">💰</span>
-        <h3>Funding</h3>
-        <p>Seed funding to accelerate LifeLoop V3 development, manufacturing, and go-to-market strategy.</p>
-      </div>
-      <div class="seek-card reveal">
-        <span class="seek-icon" aria-hidden="true">🧭</span>
-        <h3>Strategic Guidance</h3>
-        <p>Experienced advisors in agriculture, hardware, and deep-tech startups to guide our path to market.</p>
-      </div>
-      <div class="seek-card reveal">
-        <span class="seek-icon" aria-hidden="true">🤝</span>
-        <h3>Industry Connections</h3>
-        <p>Introductions to farmers, agricultural co-ops, distributors, and key players in small-scale agriculture.</p>
-      </div>
-    </div>
+    <div class="contact-grid">
 
-    <div class="contact-form-wrap reveal">
-      <h3>Get In Touch</h3>
-      <p>Interested in investing, partnering, or just learning more? Send us a message.</p>
-      <form id="contact-form" novalidate>
-        <div class="form-row">
-          <div class="form-group">
-            <label for="cf-name">Name</label>
-            <input type="text" id="cf-name" name="name" placeholder="Your name" required autocomplete="name">
-          </div>
-          <div class="form-group">
-            <label for="cf-email">Email</label>
-            <input type="email" id="cf-email" name="email" placeholder="you@example.com" required autocomplete="email">
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="cf-subject">I'm interested in&hellip;</label>
-          <select id="cf-subject" name="subject">
-            <option value="funding">Funding / Investment</option>
-            <option value="guidance">Strategic Guidance</option>
-            <option value="connections">Industry Connections</option>
-            <option value="partnership">Partnership</option>
-            <option value="other">Other</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="cf-message">Message</label>
-          <textarea id="cf-message" name="message" placeholder="Tell us about yourself and how you'd like to work with us…" required></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary btn-full">Send Message</button>
-        <div id="form-status" class="form-status" role="status" aria-live="polite"></div>
-      </form>
-    </div>
-
-    <div class="ig-cta reveal">
-      <div class="ig-logo" aria-hidden="true">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-        </svg>
-      </div>
-      <h3>Follow Our Journey</h3>
-      <p>Get behind-the-scenes updates on LifeLoop V3 development, farm testing, and launch news.</p>
-      <a href="https://www.instagram.com/lifeloop_tech?igsh=MWljY2FnbmtnOTJlaQ==" target="_blank" rel="noopener" class="btn btn-ig">
-        @lifeloop_tech
+      <a href="mailto:stemrootsontario@gmail.com" class="contact-card reveal">
+        <div class="contact-icon" aria-hidden="true">✉️</div>
+        <h3>Email Us</h3>
+        <p>stemrootsontario@gmail.com</p>
+        <span class="contact-cta">Send a message →</span>
       </a>
+
+      <a href="https://www.instagram.com/" target="_blank" rel="noopener" class="contact-card contact-ig reveal">
+        <div class="ig-logo" aria-hidden="true">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+          </svg>
+        </div>
+        <h3>Follow on Instagram</h3>
+        <p>Behind-the-scenes, camp recaps, and announcements.</p>
+        <span class="contact-cta">Follow us →</span>
+      </a>
+
     </div>
   </div>
 </section>
@@ -447,30 +309,28 @@
           <svg width="18" height="18" viewBox="0 0 22 22" fill="none" aria-hidden="true">
             <circle cx="11" cy="11" r="9" stroke="#5A8C36" stroke-width="2.2" stroke-dasharray="4 2"/>
           </svg>
-          LifeLoop
+          STEMroots
         </div>
-        <p>The world's first fully automated small-scale egg incubator.</p>
-        <p class="footer-slogan">Set it. Forget it.</p>
+        <p>Student-led STEM nonprofit running free, hands-on workshops for students aged 4-12.</p>
+        <p class="footer-slogan">Curiosity. Innovation. Roots.</p>
       </div>
       <div class="footer-links">
         <div class="footer-col">
-          <h4>Product</h4>
-          <a href="#problem">The Problem</a>
-          <a href="#solution">Solution</a>
-          <a href="#how-it-works">How It Works</a>
-          <a href="#hub">The Hub</a>
+          <h4>Explore</h4>
+          <a href="#about">About</a>
+          <a href="#programs">Programs</a>
+          <a href="#locations">Locations</a>
         </div>
         <div class="footer-col">
-          <h4>Company</h4>
-          <a href="#story">Our Story</a>
-          <a href="#invest">Investors</a>
-          <a href="#invest">Contact</a>
+          <h4>Connect</h4>
+          <a href="mailto:stemrootsontario@gmail.com">Email</a>
+          <a href="https://www.instagram.com/" target="_blank" rel="noopener">Instagram</a>
         </div>
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2025 LifeLoop — loopedeggs.ca</span>
-      <span>🥇 1st Place Ontario, AGrobotics</span>
+      <span>© 2026 STEMroots, Milton, Ontario</span>
+      <span>🌱 Student-led, Always free</span>
     </div>
   </div>
 </footer>
