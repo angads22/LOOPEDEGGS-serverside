@@ -3,334 +3,986 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>STEMroots: Student-led STEM nonprofit</title>
-  <meta name="description" content="STEMroots is a student-led STEM nonprofit running free, hands-on workshops and camps for students aged 4-12 across Ontario.">
-  <meta property="og:title" content="STEMroots: Student-led STEM nonprofit">
-  <meta property="og:description" content="Free, hands-on STEM workshops and programs for students aged 4-12. Inspiring the next generation of critical thinkers, innovators, and trailblazers.">
+  <title>LifeLoop — An incubator that hatches itself</title>
+  <meta name="description" content="LifeLoop is a fully automated egg incubator. Computer-vision candling, automated dud removal, and intelligent monitoring — without ever lifting the lid. First place Ontario AGrobotics.">
+  <meta property="og:title" content="LifeLoop — An incubator that hatches itself">
+  <meta property="og:description" content="The world's first fully automated small-scale egg incubator. Computer vision, zero chamber disruption, 100% automated.">
+  <meta property="og:url" content="https://loopedeggs.ca">
   <meta property="og:type" content="website">
-  <meta name="theme-color" content="#5A8C36">
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌱</text></svg>">
+  <meta name="theme-color" content="#0E110D">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 28'><circle cx='14' cy='14' r='11.5' stroke='%237FA257' stroke-width='1' stroke-dasharray='2.4 2.4' fill='none'/><ellipse cx='14' cy='14' rx='5' ry='6.5' stroke='%23EFEBDF' stroke-width='1' fill='none'/><circle cx='14' cy='14' r='1.3' fill='%237FA257'/></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&family=Geist:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
 
-<!-- Navigation -->
-<nav id="navbar">
-  <div class="nav-container">
-    <a href="#" class="nav-logo">
-      <svg class="logo-ring" width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
-        <circle cx="11" cy="11" r="9" stroke="#5A8C36" stroke-width="2.2" stroke-dasharray="4 2"/>
-      </svg>
-      STEMroots
+<!-- ───────── Reusable SVG icon symbols ───────── -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M5 12 L19 12 M13 6 L19 12 L13 18"/>
+    </symbol>
+    <symbol id="i-arrow-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 5 L12 19 M6 13 L12 19 L18 13"/>
+    </symbol>
+    <symbol id="i-candle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M9 3 L15 3 L15 6 L9 6 Z"/>
+      <path d="M10 6 L10 21 L14 21 L14 6"/>
+      <circle cx="12" cy="11" r="2.5"/>
+      <path d="M3 11 L7 11 M17 11 L21 11" stroke-dasharray="2 2"/>
+    </symbol>
+    <symbol id="i-thermo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M14 4 a2 2 0 0 0 -4 0 v10.5 a3.5 3.5 0 1 0 4 0 Z"/>
+      <circle cx="12" cy="17" r="1.5" fill="currentColor" stroke="none"/>
+      <path d="M12 9 L12 14"/>
+    </symbol>
+    <symbol id="i-droplet" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 3 C7 9.5 7 13 7 15 a5 5 0 0 0 10 0 C17 13 17 9.5 12 3 Z"/>
+      <path d="M10 15 a2 2 0 0 0 2 2"/>
+    </symbol>
+    <symbol id="i-snow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 2 L12 22 M2 12 L22 12 M4.5 4.5 L19.5 19.5 M19.5 4.5 L4.5 19.5"/>
+      <path d="M12 5 L10 3 M12 5 L14 3 M12 19 L10 21 M12 19 L14 21"/>
+    </symbol>
+    <symbol id="i-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M2 12 C5 6.5 8.5 4 12 4 C15.5 4 19 6.5 22 12 C19 17.5 15.5 20 12 20 C8.5 20 5 17.5 2 12 Z"/>
+      <circle cx="12" cy="12" r="3"/>
+      <circle cx="12" cy="12" r="0.7" fill="currentColor" stroke="none"/>
+    </symbol>
+    <symbol id="i-robot" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="4" y="7" width="16" height="12" rx="2"/>
+      <path d="M12 4 L12 7"/>
+      <circle cx="12" cy="3.5" r="1"/>
+      <circle cx="9" cy="12" r="1" fill="currentColor" stroke="none"/>
+      <circle cx="15" cy="12" r="1" fill="currentColor" stroke="none"/>
+      <path d="M9 16 L15 16"/>
+    </symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4 20 L4 4"/>
+      <path d="M4 20 L20 20"/>
+      <path d="M8 16 L8 12 M12 16 L12 8 M16 16 L16 14 M20 16 L20 6"/>
+    </symbol>
+    <symbol id="i-rotate" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 12 a9 9 0 1 1 -2.64 -6.36"/>
+      <path d="M21 4 L21 9 L16 9"/>
+    </symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="5" y="11" width="14" height="10" rx="1.5"/>
+      <path d="M8 11 L8 7 a4 4 0 0 1 8 0 L16 11"/>
+      <circle cx="12" cy="16" r="1" fill="currentColor" stroke="none"/>
+    </symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="7" y="2.5" width="10" height="19" rx="2"/>
+      <path d="M10 5 L14 5"/>
+      <circle cx="12" cy="18.5" r="0.7" fill="currentColor" stroke="none"/>
+    </symbol>
+    <symbol id="i-seed" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 21 C7 18 4 14 4 10 C4 6 7 3 12 3 C17 3 20 6 20 10 C20 14 17 18 12 21 Z"/>
+      <path d="M12 21 L12 11"/>
+      <path d="M12 13 L8 9 M12 11 L16 7"/>
+    </symbol>
+    <symbol id="i-compass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="9"/>
+      <path d="M15 9 L13 13 L9 15 L11 11 Z" fill="currentColor" stroke="none" opacity="0.7"/>
+      <circle cx="12" cy="12" r="0.6" fill="currentColor" stroke="none"/>
+    </symbol>
+    <symbol id="i-link" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M10 14 a4 4 0 0 1 0 -5.6 L13 5.4 a4 4 0 0 1 5.6 5.6 L17 13"/>
+      <path d="M14 10 a4 4 0 0 1 0 5.6 L11 18.6 a4 4 0 0 1 -5.6 -5.6 L7 11"/>
+    </symbol>
+    <symbol id="i-medal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="14" r="6"/>
+      <path d="M8 9 L6 3 L10 3 L12 8"/>
+      <path d="M16 9 L18 3 L14 3 L12 8"/>
+      <circle cx="12" cy="14" r="2.5"/>
+    </symbol>
+    <symbol id="brand-mark" viewBox="0 0 28 28" fill="none">
+      <circle cx="14" cy="14" r="11.5" stroke="#7FA257" stroke-width="1" stroke-dasharray="2.4 2.4"/>
+      <ellipse cx="14" cy="14" rx="5" ry="6.5" stroke="#EFEBDF" stroke-width="1"/>
+      <circle cx="14" cy="14" r="1.3" fill="#7FA257"/>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- ───────── Navigation ───────── -->
+<nav class="nav" id="nav">
+  <div class="nav__inner">
+    <a class="nav__brand" href="#top">
+      <svg class="nav__brand-mark" width="26" height="26" aria-hidden="true"><use href="#brand-mark"/></svg>
+      <span>LifeLoop</span>
     </a>
-    <div class="nav-links" id="nav-links">
-      <a href="#about">About</a>
-      <a href="#programs">Programs</a>
-      <a href="#locations">Locations</a>
-      <a href="#contact">Contact</a>
-      <a href="https://www.instagram.com/" target="_blank" rel="noopener" class="nav-cta">Follow Us</a>
+    <div class="nav__links" id="nav-links">
+      <a href="#problem">Problem</a>
+      <a href="#solution">Solution</a>
+      <a href="#process">Process</a>
+      <a href="#story">Story</a>
+      <a href="#hub">Hub</a>
     </div>
-    <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
-      <span></span><span></span><span></span>
-    </button>
+    <div class="nav__cta">
+      <span class="nav__cta-tag">V3 · IN BUILD</span>
+      <a class="btn btn--primary" href="#follow">
+        Follow <svg class="btn-arrow" width="14" height="14" aria-hidden="true"><use href="#i-arrow"/></svg>
+      </a>
+      <button class="nav__toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
   </div>
 </nav>
 
-<!-- Hero -->
-<section id="hero">
-  <canvas id="hero-canvas" aria-hidden="true"></canvas>
-  <div class="hero-content">
-    <div class="hero-badges">
-      <span class="badge badge-gold">🌱 Student-led STEM nonprofit</span>
-    </div>
-    <h1 class="hero-title">
-      Inspiring the Next<br>
-      <span class="gradient-text">Generation</span>
-    </h1>
-    <p class="hero-tagline">of critical thinkers, innovators, and trailblazers.</p>
-    <p class="hero-body">
-      STEMroots brings free, hands-on STEM workshops and programs for students aged 4-12, designed to spark curiosity and encourage innovation.
-    </p>
-    <div class="hero-actions">
-      <a href="#programs" class="btn btn-primary">Our Programs</a>
-      <a href="#contact" class="btn btn-ghost">Get in Touch</a>
-    </div>
-    <div class="hero-stats">
-      <div class="stat">
-        <span class="stat-value" data-counter data-target="50" data-prefix="" data-suffix="+">50+</span>
-        <span class="stat-label">Free Camps Run</span>
-      </div>
-      <div class="stat-divider"></div>
-      <div class="stat">
-        <span class="stat-value" data-counter data-target="100" data-prefix="" data-suffix="%">100%</span>
-        <span class="stat-label">Student Led</span>
-      </div>
-      <div class="stat-divider"></div>
-      <div class="stat">
-        <span class="stat-value">4-12</span>
-        <span class="stat-label">Ages Served</span>
-      </div>
-    </div>
-    <p class="hero-mission">
-      Our mission is to make STEM education accessible and entertaining for youth through hands-on experiments.
-    </p>
-  </div>
-  <a href="#carousel" class="hero-scroll-hint" aria-label="Scroll down">
-    <span>Scroll to explore</span>
-    <div class="scroll-arrow" aria-hidden="true"></div>
-  </a>
-</section>
+<main id="top">
 
-<!-- Highlights / Carousel -->
-<section id="carousel" class="section">
-  <div class="container">
-    <div class="section-tag reveal">Highlights</div>
-    <h2 class="section-title reveal">A Quick Look at<br><span class="gradient-text">STEMroots</span></h2>
-    <p class="section-subtitle reveal">Snapshots from our camps, our team, and the milestones that keep us going.</p>
-  </div>
-
-  <div class="carousel-track-wrapper reveal">
-    <div class="carousel-track">
-
-      <div class="carousel-card carousel-logo">
-        <div class="cl-ring">
-          <svg width="80" height="80" viewBox="0 0 22 22" fill="none" aria-hidden="true">
-            <circle cx="11" cy="11" r="9" stroke="#5A8C36" stroke-width="2.2" stroke-dasharray="4 2"/>
-          </svg>
+<!-- ───────── Hero ───────── -->
+<section class="hero grain">
+  <canvas class="hero__canvas" id="hero-canvas" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <div class="hero__inner">
+      <div>
+        <div class="hero__tags">
+          <span class="tag tag--moss">
+            <span class="tag__dot"></span>
+            1ST PLACE · ONTARIO AGROBOTICS
+          </span>
+          <span class="tag">
+            <span class="tag__dot"></span>
+            WESTERN FAIR DISTRICT SHOWCASE
+          </span>
         </div>
-        <span class="cl-name">STEMroots</span>
-      </div>
 
-      <div class="carousel-card carousel-photo">
-        <div class="cp-img" aria-hidden="true">🎉</div>
-        <div class="cp-overlay">
-          <span class="cp-tag">Milestone</span>
-          <h3>Over 50 Free Camps Run</h3>
+        <h1 class="hero__title h-display">
+          An incubator that<br>
+          <span class="italic-accent">hatches itself.</span>
+        </h1>
+
+        <p class="hero__lede lede">
+          LifeLoop is a fully automated egg incubator. Candling, dud removal, turning and monitoring all happen inside the chamber — without ever lifting the lid.
+        </p>
+
+        <div class="hero__actions">
+          <a href="#story" class="btn btn--primary">
+            Read our story
+            <svg class="btn-arrow" width="16" height="16" aria-hidden="true"><use href="#i-arrow"/></svg>
+          </a>
+          <a href="#follow" class="btn btn--ghost">Follow the build</a>
+        </div>
+
+        <div class="hero__stats">
+          <div class="hero__stat">
+            <span class="hero__stat-num" data-counter data-target="100" data-suffix="%">100%</span>
+            <span class="hero__stat-lbl">Process automation</span>
+          </div>
+          <div class="hero__stat">
+            <span class="hero__stat-num" data-counter data-target="0">0</span>
+            <span class="hero__stat-lbl">Chamber opens required</span>
+          </div>
+          <div class="hero__stat">
+            <span class="hero__stat-num" data-counter data-target="21">21</span>
+            <span class="hero__stat-lbl">Days, hands off</span>
+          </div>
         </div>
       </div>
 
-      <div class="carousel-card carousel-photo">
-        <div class="cp-img" aria-hidden="true">👩‍🎓</div>
-        <div class="cp-overlay">
-          <span class="cp-tag">Team</span>
-          <h3>Student Led + Designed</h3>
-        </div>
-      </div>
+      <div class="hero__incubator">
+        <svg viewBox="0 0 480 380" width="100%" aria-hidden="true">
+          <defs>
+            <radialGradient id="warm" cx="50%" cy="55%" r="40%">
+              <stop offset="0%" stop-color="#C2613B" stop-opacity="0.35"/>
+              <stop offset="60%" stop-color="#7FA257" stop-opacity="0.06"/>
+              <stop offset="100%" stop-color="#7FA257" stop-opacity="0"/>
+            </radialGradient>
+            <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+              <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(239,235,223,0.04)" stroke-width="0.5"/>
+            </pattern>
+            <linearGradient id="shell" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#EFEBDF" stop-opacity="0.95"/>
+              <stop offset="100%" stop-color="#C8C3B4" stop-opacity="0.85"/>
+            </linearGradient>
+          </defs>
 
-      <div class="carousel-card carousel-photo">
-        <div class="cp-img" aria-hidden="true">🧪</div>
-        <div class="cp-overlay">
-          <span class="cp-tag">Experience</span>
-          <h3>Hands-on Fun, No Worksheets!</h3>
-        </div>
-      </div>
+          <rect width="480" height="380" fill="url(#grid)"/>
 
-      <div class="carousel-card carousel-news">
-        <div class="cn-placeholder" aria-hidden="true">
-          <span>📰</span>
-          <small>News photo placeholder</small>
-        </div>
-        <div class="cp-overlay">
-          <span class="cp-tag">Press</span>
-          <h3>MDHS Crossover</h3>
-        </div>
-      </div>
+          <!-- Outer chamber -->
+          <rect x="60" y="80" width="360" height="240" rx="3" fill="rgba(20,24,18,0.5)" stroke="#383E33" stroke-width="1"/>
 
-      <div class="carousel-card carousel-news">
-        <div class="cn-placeholder" aria-hidden="true">
-          <span>🎤</span>
-          <small>News photo placeholder</small>
-        </div>
-        <div class="cp-overlay">
-          <span class="cp-tag">Press</span>
-          <h3>TEDx Talk</h3>
-        </div>
-      </div>
+          <!-- Glass viewport -->
+          <rect x="80" y="100" width="320" height="180" rx="2" fill="url(#warm)" stroke="rgba(127,162,87,0.25)" stroke-width="0.75"/>
 
-    </div>
-  </div>
-</section>
+          <!-- Egg tray (5×3) -->
+          <g id="hero-eggs"></g>
 
-<!-- About -->
-<section id="about" class="section section-dark">
-  <div class="container">
-    <div class="section-tag reveal">About Us</div>
-    <h2 class="section-title reveal">Built by Students,<br>for <span class="gradient-text">Students</span></h2>
+          <!-- Camera rail -->
+          <line x1="80" y1="105" x2="400" y2="105" stroke="rgba(239,235,223,0.18)" stroke-width="0.6"/>
+          <rect x="232" y="100" width="16" height="10" fill="#1B201A" stroke="#8A8678" stroke-width="0.6"/>
+          <circle cx="240" cy="105" r="1.5" fill="#C2613B"/>
 
-    <div class="problem-grid">
-      <div class="problem-main reveal">
-        <div class="problem-icon" aria-hidden="true">🌱</div>
-        <h3>Our Story</h3>
-        <p>STEMroots is a student-led nonprofit organization that runs STEM camps and workshops at schools across Ontario. As of April 2026, we have run over 50 free camps at local Montessori schools, public schools, and high schools.</p>
-        <p>Started by 3 motivated high school students, STEMroots has rapidly scaled into a trusted organization that brings quality interactive camps across a variety of fields, such as robotics and engineering.</p>
-      </div>
-      <div class="problem-effects">
-        <div class="effect-card reveal">
-          <span class="effect-icon" aria-hidden="true">🆓</span>
-          <h4>Always Free</h4>
-          <p>Every camp and workshop we run is completely free to schools and students.</p>
-        </div>
-        <div class="effect-card reveal">
-          <span class="effect-icon" aria-hidden="true">🤝</span>
-          <h4>Trusted Partner</h4>
-          <p>Working with Montessori schools, public schools, and high schools across Ontario.</p>
-        </div>
-        <div class="effect-card reveal">
-          <span class="effect-icon" aria-hidden="true">🚀</span>
-          <h4>Rapid Growth</h4>
-          <p>From 3 students to a province-wide network in just a few short years.</p>
-        </div>
-        <div class="effect-card reveal">
-          <span class="effect-icon" aria-hidden="true">🔬</span>
-          <h4>Real Experiments</h4>
-          <p>Robotics, engineering, biology and beyond, always hands-on, never just slides.</p>
-        </div>
+          <!-- Bottom telemetry panel -->
+          <rect x="80" y="290" width="320" height="20" fill="rgba(0,0,0,0.3)" stroke="#2A2F26" stroke-width="0.6"/>
+          <text x="92"  y="304" font-family="IBM Plex Mono" font-size="8" fill="#A9C57F" letter-spacing="0.08em">37.5°C</text>
+          <text x="148" y="304" font-family="IBM Plex Mono" font-size="8" fill="#8A8678" letter-spacing="0.08em">55% RH</text>
+          <text x="208" y="304" font-family="IBM Plex Mono" font-size="8" fill="#8A8678" letter-spacing="0.08em">DAY 12 / 21</text>
+          <text x="296" y="304" font-family="IBM Plex Mono" font-size="8" fill="#8A8678" letter-spacing="0.08em">82 EGGS · 0 DUDS</text>
+          <circle cx="385" cy="300" r="2" fill="#7FA257">
+            <animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite"/>
+          </circle>
+
+          <!-- Annotations -->
+          <g font-family="IBM Plex Mono" font-size="8" fill="#8A8678" letter-spacing="0.08em">
+            <text x="60"  y="74">FIG. 01</text>
+            <text x="350" y="74">LIFELOOP V3 · CHAMBER</text>
+            <line x1="60"  y1="110" x2="50"  y2="110" stroke="#8A8678" stroke-width="0.5"/>
+            <text x="20"  y="113">VIEWPORT</text>
+            <line x1="420" y1="200" x2="430" y2="200" stroke="#8A8678" stroke-width="0.5"/>
+            <text x="434" y="203">CV · CANDLING</text>
+            <line x1="60"  y1="300" x2="50"  y2="300" stroke="#8A8678" stroke-width="0.5"/>
+            <text x="20"  y="303">TELEMETRY</text>
+          </g>
+
+          <!-- Ground line -->
+          <line x1="20" y1="345" x2="460" y2="345" stroke="rgba(239,235,223,0.08)" stroke-width="0.5" stroke-dasharray="3 3"/>
+        </svg>
       </div>
     </div>
+
+    <a href="#problem" class="hero__scroll" aria-label="Scroll to problem">
+      <span class="hero__scroll-label">Scroll · The problem</span>
+      <span class="hero__scroll-line"></span>
+      <svg class="hero__scroll-arrow" width="18" height="18" aria-hidden="true"><use href="#i-arrow-down"/></svg>
+    </a>
   </div>
 </section>
 
-<!-- Programs -->
-<section id="programs" class="section">
-  <div class="container">
-    <div class="section-tag reveal">Programs</div>
-    <h2 class="section-title reveal">Lessons That<br><span class="gradient-text">Stick With Kids</span></h2>
-    <p class="section-subtitle reveal">All STEMroots lessons combine an informational presentation with a hands-on experiment. We have a variety of premade lessons, but we're also happy to design custom lessons to match your curriculum. We offer one-off lessons or multi-week programs.</p>
+<!-- ───────── Problem ───────── -->
+<section class="section section-rule section-tinted" id="problem">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <div class="eyebrow">The problem</div>
+        <h2 class="h-section">
+          The flaw every<br>
+          farmer <span class="italic-accent">knows.</span>
+        </h2>
+      </div>
+      <p class="body" style="font-size:17px">
+        Small-scale egg incubators share one consistent, unavoidable flaw. It has been silently reducing hatch rates for decades — and there is no commercial solution at non-factory-farm scale.
+      </p>
+    </div>
 
-    <div class="programs-list">
+    <div class="problem-narrative reveal">
+      <div>
+        <div class="eyebrow" style="margin-bottom:18px">Verbatim · Founders' note</div>
+        <p class="body">
+          Small scale egg incubators contain one consistent flaw — they need to be regularly opened in order to candle eggs (check their growth by shining a light through the egg). This is necessary because eggs that aren't properly growing must be removed from the incubator, otherwise they risk damaging the entire batch through rot.
+        </p>
+      </div>
+      <div>
+        <p class="body">
+          This process, however, exposes the eggs inside to harmful fluctuations in temperature and humidity. Egg incubation is a sensitive process, and these fluctuations can be harmful to the development of the eggs (potentially even reducing hatch rates, especially in winter months).
+        </p>
+      </div>
+    </div>
 
-      <details class="program reveal">
-        <summary>
-          <span class="program-icon" aria-hidden="true">🧪</span>
-          <span class="program-name">Science</span>
-          <span class="program-chev" aria-hidden="true"></span>
-        </summary>
-        <ul class="program-items">
-          <li><strong>Chemical Reactions</strong> — Building lava lamps + invisible ink</li>
-          <li><strong>Introduction to Physics</strong> — Egg drop</li>
-          <li><strong>Biology &amp; Plant Anatomy</strong> — Growing bean plants in different environments + coloured celery</li>
-        </ul>
-      </details>
+    <div class="fig-frame reveal">
+      <div class="fig-frame__caption">
+        <span>FIG. 02 · CHAMBER TEMPERATURE OVER A 21-DAY CYCLE</span>
+        <span>SOURCE · OPEN SPACES FARMS</span>
+      </div>
+      <svg viewBox="0 0 720 300" width="100%" aria-hidden="true">
+        <line x1="60" y1="40" x2="60" y2="240" stroke="#383E33" stroke-width="1"/>
+        <line x1="60" y1="240" x2="700" y2="240" stroke="#383E33" stroke-width="1"/>
 
-      <details class="program reveal">
-        <summary>
-          <span class="program-icon" aria-hidden="true">🛠️</span>
-          <span class="program-name">Engineering</span>
-          <span class="program-chev" aria-hidden="true"></span>
-        </summary>
-        <ul class="program-items">
-          <li><strong>Engineering to Solve Problems</strong> — Building boats</li>
-          <li><strong>Engineering to Solve Problems</strong> — Building bridges</li>
-          <li><strong>Engineering &amp; Design</strong> — Egg drop</li>
-        </ul>
-      </details>
+        <rect x="60" y="120" width="640" height="40" fill="rgba(127,162,87,0.06)" stroke="rgba(127,162,87,0.25)" stroke-width="0.5" stroke-dasharray="3 3"/>
+        <text x="68" y="115" font-family="IBM Plex Mono" font-size="9" fill="#A9C57F" letter-spacing="0.1em">OPTIMAL · 37.2–37.8°C</text>
 
-      <details class="program reveal">
-        <summary>
-          <span class="program-icon" aria-hidden="true">💻</span>
-          <span class="program-name">Technology</span>
-          <span class="program-chev" aria-hidden="true"></span>
-        </summary>
-        <ul class="program-items">
-          <li><strong>Fundamentals of Robotics</strong> — Interactive game</li>
-          <li><strong>Technology in Our World</strong> — Building circuits</li>
-          <li><strong>Coding</strong> — Coding with Scratch</li>
-        </ul>
-      </details>
+        <g font-family="IBM Plex Mono" font-size="9" fill="#8A8678" letter-spacing="0.08em">
+          <text x="30" y="60"  text-anchor="end">39°</text>
+          <text x="30" y="142" text-anchor="end">37.5°</text>
+          <text x="30" y="225" text-anchor="end">35°</text>
+        </g>
 
+        <!-- Manual line: spikes at lid opens -->
+        <path d="M 60 140 L 140 140 L 145 60 L 165 140 L 245 140 L 250 70 L 270 140 L 350 140 L 355 200 L 380 140 L 460 140 L 465 65 L 485 140 L 565 140 L 570 195 L 595 140 L 700 140"
+          stroke="#C2613B" stroke-width="1.25" fill="none"/>
+        <!-- LifeLoop line: flat -->
+        <line x1="60" y1="140" x2="700" y2="140" stroke="#7FA257" stroke-width="1.25"/>
+
+        <!-- Lid open markers -->
+        <g>
+          <line x1="145" y1="40" x2="145" y2="240" stroke="rgba(194,97,59,0.2)" stroke-width="0.5" stroke-dasharray="2 3"/>
+          <line x1="250" y1="40" x2="250" y2="240" stroke="rgba(194,97,59,0.2)" stroke-width="0.5" stroke-dasharray="2 3"/>
+          <line x1="355" y1="40" x2="355" y2="240" stroke="rgba(194,97,59,0.2)" stroke-width="0.5" stroke-dasharray="2 3"/>
+          <line x1="465" y1="40" x2="465" y2="240" stroke="rgba(194,97,59,0.2)" stroke-width="0.5" stroke-dasharray="2 3"/>
+          <line x1="570" y1="40" x2="570" y2="240" stroke="rgba(194,97,59,0.2)" stroke-width="0.5" stroke-dasharray="2 3"/>
+          <circle cx="145" cy="240" r="2.5" fill="#C2613B"/>
+          <circle cx="250" cy="240" r="2.5" fill="#C2613B"/>
+          <circle cx="355" cy="240" r="2.5" fill="#C2613B"/>
+          <circle cx="465" cy="240" r="2.5" fill="#C2613B"/>
+          <circle cx="570" cy="240" r="2.5" fill="#C2613B"/>
+        </g>
+
+        <text x="148" y="34" font-family="IBM Plex Mono" font-size="8" fill="#D98F6A" letter-spacing="0.1em">LID OPENS</text>
+
+        <g font-family="IBM Plex Mono" font-size="9" fill="#8A8678" letter-spacing="0.08em">
+          <text x="60"  y="260">DAY 0</text>
+          <text x="380" y="260" text-anchor="middle">DAY 10</text>
+          <text x="700" y="260" text-anchor="end">DAY 21</text>
+        </g>
+
+        <g transform="translate(60, 280)" font-family="IBM Plex Mono" font-size="9" fill="#C8C3B4" letter-spacing="0.08em">
+          <line x1="0" y1="-3" x2="20" y2="-3" stroke="#C2613B" stroke-width="1.25"/>
+          <text x="28" y="0">MANUAL CANDLING</text>
+          <line x1="200" y1="-3" x2="220" y2="-3" stroke="#7FA257" stroke-width="1.25"/>
+          <text x="228" y="0">LIFELOOP · SEALED</text>
+        </g>
+      </svg>
+    </div>
+
+    <div class="problem-rows">
+      <div class="problem-row reveal">
+        <div class="problem-row__num">01</div>
+        <div class="problem-row__icon"><svg width="22" height="22" aria-hidden="true"><use href="#i-candle"/></svg></div>
+        <div>
+          <h3 class="h-card">Candling requires opening</h3>
+          <p class="body">To check development, farmers must open the incubator and shine a light through every egg. Non-viable eggs must be removed immediately to prevent rot from spreading to the healthy batch.</p>
+        </div>
+      </div>
+      <div class="problem-row reveal">
+        <div class="problem-row__num">02</div>
+        <div class="problem-row__icon"><svg width="22" height="22" aria-hidden="true"><use href="#i-thermo"/></svg></div>
+        <div>
+          <h3 class="h-card">Temperature spikes</h3>
+          <p class="body">Each opening causes rapid temperature swings that stress developing embryos. The carefully controlled environment is disrupted in seconds.</p>
+        </div>
+      </div>
+      <div class="problem-row reveal">
+        <div class="problem-row__num">03</div>
+        <div class="problem-row__icon"><svg width="22" height="22" aria-hidden="true"><use href="#i-droplet"/></svg></div>
+        <div>
+          <h3 class="h-card">Humidity loss</h3>
+          <p class="body">Precisely maintained humidity — critical for development — drops the moment the lid lifts and takes hours to recover.</p>
+        </div>
+      </div>
+      <div class="problem-row reveal">
+        <div class="problem-row__num">04</div>
+        <div class="problem-row__icon"><svg width="22" height="22" aria-hidden="true"><use href="#i-snow"/></svg></div>
+        <div>
+          <h3 class="h-card">Worse in winter</h3>
+          <p class="body">Cold ambient air amplifies fluctuations, making winter incubation especially high-risk for small farms.</p>
+        </div>
+      </div>
+    </div>
+
+    <figure class="pull-figure reveal">
+      <blockquote>“There are no solutions to this problem on the market at a non-factory-farm scale.”</blockquote>
+      <figcaption>— Open Spaces Farms · Ontario community farm</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ───────── Solution ───────── -->
+<section class="section" id="solution">
+  <div class="wrap">
+    <div class="section-head section-head--single reveal">
+      <div class="eyebrow">The solution</div>
+      <h2 class="h-section" style="margin-bottom:28px">
+        Every process now happens<br>
+        <span class="italic-accent">inside the chamber.</span>
+      </h2>
+      <p class="lede" style="max-width:60ch">
+        We designed a prototype of an egg incubator that can automatically do all processes internally — removing the need to open the incubator. Six independent systems work together so the lid never has to open until the chicks are ready to come out.
+      </p>
+    </div>
+
+    <div class="solution-grid">
+      <div class="solution-grid__cutaway reveal">
+        <svg viewBox="0 0 360 480" width="100%" aria-hidden="true">
+          <defs>
+            <linearGradient id="warmth" x1="50%" y1="0%" x2="50%" y2="100%">
+              <stop offset="0%"  stop-color="rgba(194,97,59,0)"/>
+              <stop offset="50%" stop-color="rgba(194,97,59,0.18)"/>
+              <stop offset="100%" stop-color="rgba(194,97,59,0)"/>
+            </linearGradient>
+          </defs>
+
+          <rect x="40" y="40" width="280" height="400" fill="rgba(20,24,18,0.6)" stroke="#383E33" stroke-width="1"/>
+
+          <line x1="60" y1="70" x2="300" y2="70" stroke="rgba(239,235,223,0.15)" stroke-width="0.6"/>
+          <rect x="170" y="58" width="20" height="14" fill="#1B201A" stroke="#8A8678" stroke-width="0.6"/>
+          <circle cx="180" cy="65" r="2" fill="#C2613B"/>
+          <line x1="180" y1="72" x2="180" y2="200" stroke="#C2613B" stroke-width="0.4" stroke-dasharray="2 3"/>
+          <text x="195" y="68" font-family="IBM Plex Mono" font-size="8" fill="#8A8678" letter-spacing="0.1em">CV CAMERA · GIMBAL</text>
+
+          <rect x="60" y="100" width="240" height="240" fill="url(#warmth)"/>
+
+          <!-- Trays -->
+          <g id="cutaway-trays"></g>
+
+          <!-- Sensors left -->
+          <g>
+            <circle cx="50" cy="140" r="3" fill="#0E110D" stroke="#7FA257" stroke-width="0.7"/>
+            <circle cx="50" cy="200" r="3" fill="#0E110D" stroke="#7FA257" stroke-width="0.7"/>
+            <circle cx="50" cy="260" r="3" fill="#0E110D" stroke="#7FA257" stroke-width="0.7"/>
+            <line x1="40" y1="140" x2="44" y2="140" stroke="#7FA257" stroke-width="0.5"/>
+            <line x1="40" y1="200" x2="44" y2="200" stroke="#7FA257" stroke-width="0.5"/>
+            <line x1="40" y1="260" x2="44" y2="260" stroke="#7FA257" stroke-width="0.5"/>
+            <text x="20" y="143" font-family="IBM Plex Mono" font-size="7" fill="#8A8678" letter-spacing="0.1em" text-anchor="end">T₁</text>
+            <text x="20" y="203" font-family="IBM Plex Mono" font-size="7" fill="#8A8678" letter-spacing="0.1em" text-anchor="end">RH</text>
+            <text x="20" y="263" font-family="IBM Plex Mono" font-size="7" fill="#8A8678" letter-spacing="0.1em" text-anchor="end">T₂</text>
+          </g>
+
+          <!-- Dud arm right -->
+          <line x1="300" y1="200" x2="320" y2="200" stroke="#8A8678" stroke-width="0.6"/>
+          <rect x="320" y="195" width="14" height="10" fill="#1B201A" stroke="#8A8678" stroke-width="0.6"/>
+          <text x="340" y="200" font-family="IBM Plex Mono" font-size="8" fill="#8A8678" letter-spacing="0.1em">DUD ARM</text>
+          <text x="340" y="212" font-family="IBM Plex Mono" font-size="8" fill="#8A8678" letter-spacing="0.1em">EXTRACTOR</text>
+
+          <!-- Status panel -->
+          <rect x="60" y="370" width="240" height="50" fill="rgba(0,0,0,0.3)" stroke="#2A2F26" stroke-width="0.6"/>
+          <text x="72" y="392" font-family="IBM Plex Mono" font-size="9" fill="#A9C57F" letter-spacing="0.14em">CHAMBER · STATUS</text>
+          <g font-family="IBM Plex Mono" font-size="9" fill="#C8C3B4" letter-spacing="0.06em">
+            <text x="72" y="408">37.5°C</text>
+            <text x="125" y="408">55% RH</text>
+            <text x="180" y="408">D 12/21</text>
+            <text x="240" y="408">82·0</text>
+          </g>
+          <circle cx="290" cy="405" r="2" fill="#7FA257">
+            <animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite"/>
+          </circle>
+
+          <line x1="40" y1="440" x2="320" y2="440" stroke="#8A8678" stroke-width="0.6"/>
+          <rect x="60"  y="440" width="14" height="10" fill="#1B201A" stroke="#8A8678" stroke-width="0.5"/>
+          <rect x="286" y="440" width="14" height="10" fill="#1B201A" stroke="#8A8678" stroke-width="0.5"/>
+
+          <text x="40" y="32" font-family="IBM Plex Mono" font-size="9" fill="#8A8678" letter-spacing="0.14em">FIG. 03 · LIFELOOP V3 · CUTAWAY</text>
+        </svg>
+      </div>
+
+      <div class="capability-list">
+        <div class="capability reveal">
+          <div class="capability__icon"><svg width="22" height="22" aria-hidden="true"><use href="#i-eye"/></svg></div>
+          <div>
+            <div class="capability__head">
+              <span class="capability__idx">A</span>
+              <h3>Computer-vision candling</h3>
+            </div>
+            <p class="capability__body">Built-in cameras analyse development on a daily schedule. No human intervention. Zero chamber exposure.</p>
+          </div>
+        </div>
+        <div class="capability reveal">
+          <div class="capability__icon"><svg width="22" height="22" aria-hidden="true"><use href="#i-robot"/></svg></div>
+          <div>
+            <div class="capability__head">
+              <span class="capability__idx">B</span>
+              <h3>Automated dud removal</h3>
+            </div>
+            <p class="capability__body">Non-viable eggs are identified and extracted from the batch automatically, protecting healthy eggs from contamination.</p>
+          </div>
+        </div>
+        <div class="capability reveal">
+          <div class="capability__icon"><svg width="22" height="22" aria-hidden="true"><use href="#i-chart"/></svg></div>
+          <div>
+            <div class="capability__head">
+              <span class="capability__idx">C</span>
+              <h3>Per-egg tracking</h3>
+            </div>
+            <p class="capability__body">Every egg is tracked individually through the cycle, giving full visibility into each embryo's progress.</p>
+          </div>
+        </div>
+        <div class="capability reveal">
+          <div class="capability__icon"><svg width="22" height="22" aria-hidden="true"><use href="#i-rotate"/></svg></div>
+          <div>
+            <div class="capability__head">
+              <span class="capability__idx">D</span>
+              <h3>Auto-turning</h3>
+            </div>
+            <p class="capability__body">Eggs turn at optimal intervals — a critical step for preventing embryo adhesion to the shell.</p>
+          </div>
+        </div>
+        <div class="capability reveal">
+          <div class="capability__icon"><svg width="22" height="22" aria-hidden="true"><use href="#i-lock"/></svg></div>
+          <div>
+            <div class="capability__head">
+              <span class="capability__idx">E</span>
+              <h3>Lockdown phase</h3>
+            </div>
+            <p class="capability__body">The final days of incubation are managed automatically, with conditions optimised for hatching without intervention.</p>
+          </div>
+        </div>
+        <div class="capability reveal">
+          <div class="capability__icon"><svg width="22" height="22" aria-hidden="true"><use href="#i-phone"/></svg></div>
+          <div>
+            <div class="capability__head">
+              <span class="capability__idx">F</span>
+              <h3>Companion app</h3>
+            </div>
+            <p class="capability__body">Real-time updates, alerts and cycle insights — all from your phone, all the time.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <figure class="pull-figure reveal" style="margin-top:100px">
+      <blockquote>“Farmers don't need to interact with LifeLoop at all until the incubation cycle completes.”</blockquote>
+      <figcaption>That's where our slogan came from — Set it. Forget it.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ───────── Process ───────── -->
+<section class="section section-rule section-tinted" id="process">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <div class="eyebrow">Process</div>
+        <h2 class="h-section">
+          Three steps.<br>
+          <span class="italic-accent">That's it.</span>
+        </h2>
+      </div>
+      <p class="body" style="font-size:16">
+        From the moment you load the chamber to the moment the chicks arrive, you do exactly one thing — wait.
+      </p>
+    </div>
+
+    <div class="steps">
+      <div class="step reveal">
+        <div class="step__num">01</div>
+        <div>
+          <h3 class="step__title">Load and start</h3>
+          <p class="step__body">Place fertilised eggs in the LifeLoop chamber and start the cycle. That is the only thing you need to do.</p>
+        </div>
+      </div>
+      <div class="step reveal">
+        <div class="step__num">02</div>
+        <div>
+          <h3 class="step__title">Automated monitoring</h3>
+          <p class="step__body">LifeLoop continuously manages temperature, humidity, turning and candling. Duds are removed automatically. Real-time updates arrive on your phone.</p>
+        </div>
+      </div>
+      <div class="step reveal">
+        <div class="step__num">03</div>
+        <div>
+          <h3 class="step__title">Watch them hatch</h3>
+          <p class="step__body">LifeLoop notifies you when hatch day arrives. Open the chamber for the first time since you started, and greet your chicks.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="cycle reveal" id="cycle">
+      <div class="cycle__caption">
+        <span class="left">FIG. 04 · TYPICAL 21-DAY CHICKEN INCUBATION CYCLE</span>
+        <span class="right">SEALED · 0 OPENS</span>
+      </div>
+      <div class="cycle__bar">
+        <div class="cycle__phase cycle__phase--a" style="left:0%; width:71.43%">
+          <div>
+            <div class="cycle__phase-label">INCUBATION</div>
+            <div class="cycle__phase-sub">auto-managed</div>
+          </div>
+        </div>
+        <div class="cycle__phase cycle__phase--b" style="left:71.43%; width:14.29%">
+          <div>
+            <div class="cycle__phase-label">DEVELOPMENT</div>
+            <div class="cycle__phase-sub">cv candling</div>
+          </div>
+        </div>
+        <div class="cycle__phase cycle__phase--c" style="left:85.71%; width:14.29%">
+          <div>
+            <div class="cycle__phase-label">LOCKDOWN</div>
+            <div class="cycle__phase-sub">pre-hatch</div>
+          </div>
+        </div>
+        <div class="cycle__axis"></div>
+        <div class="cycle__tick" style="left:0%;    height:8px"></div>
+        <div class="cycle__tick" style="left:33.3%; height:8px"></div>
+        <div class="cycle__tick" style="left:66.6%; height:8px"></div>
+        <div class="cycle__tick" style="left:100%;  height:8px"></div>
+        <div class="cycle__tick" style="left:4.7%;  height:4px"></div>
+        <div class="cycle__tick" style="left:9.5%;  height:4px"></div>
+        <div class="cycle__tick" style="left:14.2%; height:4px"></div>
+        <div class="cycle__tick" style="left:19.0%; height:4px"></div>
+        <div class="cycle__tick" style="left:23.8%; height:4px"></div>
+        <div class="cycle__tick" style="left:28.5%; height:4px"></div>
+        <div class="cycle__tick" style="left:38.0%; height:4px"></div>
+        <div class="cycle__tick" style="left:42.8%; height:4px"></div>
+        <div class="cycle__tick" style="left:47.6%; height:4px"></div>
+        <div class="cycle__tick" style="left:52.3%; height:4px"></div>
+        <div class="cycle__tick" style="left:57.1%; height:4px"></div>
+        <div class="cycle__tick" style="left:61.9%; height:4px"></div>
+        <div class="cycle__tick" style="left:71.4%; height:4px"></div>
+        <div class="cycle__tick" style="left:76.1%; height:4px"></div>
+        <div class="cycle__tick" style="left:80.9%; height:4px"></div>
+        <div class="cycle__tick" style="left:85.7%; height:4px"></div>
+        <div class="cycle__tick" style="left:90.4%; height:4px"></div>
+        <div class="cycle__tick" style="left:95.2%; height:4px"></div>
+      </div>
+      <div class="cycle__days">
+        <div class="cycle__day" style="left:0%">DAY 00</div>
+        <div class="cycle__day" style="left:33.3%; transform:translateX(-50%)">DAY 07</div>
+        <div class="cycle__day" style="left:66.6%; transform:translateX(-50%)">DAY 14</div>
+        <div class="cycle__day" style="left:100%; transform:translateX(-100%)">DAY 21</div>
+      </div>
+      <div class="cycle__events">
+        <div class="cycle__event" style="left:14.28%">
+          <div class="cycle__event-dot"></div>
+          <div class="cycle__event-lbl">1ST CANDLE</div>
+        </div>
+        <div class="cycle__event" style="left:47.62%">
+          <div class="cycle__event-dot"></div>
+          <div class="cycle__event-lbl">2ND CANDLE</div>
+        </div>
+        <div class="cycle__event" style="left:85.71%">
+          <div class="cycle__event-dot"></div>
+          <div class="cycle__event-lbl">LOCKDOWN</div>
+        </div>
+        <div class="cycle__event cycle__event--highlight" style="left:100%">
+          <div class="cycle__event-dot"></div>
+          <div class="cycle__event-lbl">HATCH</div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- Locations -->
-<section id="locations" class="section section-dark">
-  <div class="container">
-    <div class="section-tag reveal">Locations</div>
-    <h2 class="section-title reveal">Where You'll<br><span class="gradient-text">Find Us</span></h2>
+<!-- ───────── Story ───────── -->
+<section class="section" id="story">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <div class="eyebrow">Our journey</div>
+        <h2 class="h-section">
+          From farm problem to<br>
+          <span class="italic-accent">provincial champion.</span>
+        </h2>
+      </div>
+      <p class="body" style="font-size:16">
+        A short timeline of how LifeLoop went from a community-farm visit to a first-place finish at the Ontario AGrobotics finals — and what happens next.
+      </p>
+    </div>
 
-    <div class="locations-grid">
-      <div class="location-card reveal">
-        <div class="loc-pin" aria-hidden="true">📍</div>
-        <h3>Milton, Ontario</h3>
-        <p>Our home chapter, running free camps and workshops at schools across the Milton area.</p>
-        <span class="loc-status">Active Chapter</span>
+    <div class="journey">
+      <div class="journey-entry reveal">
+        <div class="journey-entry__tag">THE BEGINNING</div>
+        <div class="journey-entry__spine">
+          <div class="journey-entry__spine-dot"></div>
+          <div class="journey-entry__spine-line"></div>
+        </div>
+        <div class="journey-entry__content">
+          <h3>A real problem at a real farm</h3>
+          <p class="journey-entry__body">We identified this problem while visiting <strong>Open Spaces Farms</strong>, a real community farm that regularly incubates chicken eggs. We were visiting to try to identify real, difficult problems in the agricultural industry for a robotics competition we had joined (AGrobotics).</p>
+          <p class="journey-entry__body">They presented us with this issue, and it stood out to us because according to the farm, there were no solutions to this problem on the market (at a non factory-farm scale).</p>
+        </div>
       </div>
 
-      <div class="location-card location-soon reveal">
-        <div class="loc-pin" aria-hidden="true">✨</div>
-        <h3>More Chapters Coming Soon</h3>
-        <p>We're expanding! Want to bring STEMroots to your community? Get in touch.</p>
-        <span class="loc-status loc-status-soon">Expanding</span>
+      <div class="journey-entry reveal">
+        <div class="journey-entry__tag">AGROBOTICS ENTRY</div>
+        <div class="journey-entry__spine">
+          <div class="journey-entry__spine-dot"></div>
+          <div class="journey-entry__spine-line"></div>
+        </div>
+        <div class="journey-entry__content">
+          <h3>LifeLoop is born</h3>
+          <p class="journey-entry__body">That's how LifeLoop started — it was a submission to a robotics competition. We designed a prototype of an egg incubator that can automatically do all processes internally, removing the need to open the incubator.</p>
+          <p class="journey-entry__body">Egg candling (via computer vision), dud egg removal, tracking, turning, and the lockdown phase are all completed automatically and monitored through a companion app, without exposing the main chamber to outside air. This comes with the added benefit of saving farmers precious time — because all processes are automated (including many that are typically done manually) farmers do not need to interact with LifeLoop at all until the incubation cycle completes.</p>
+          <p class="journey-entry__body">That's where our slogan came from: <strong>Set it. Forget it.</strong></p>
+        </div>
+      </div>
+
+      <div class="journey-entry reveal">
+        <div class="journey-entry__tag">PROVINCIAL FINALIST</div>
+        <div class="journey-entry__spine">
+          <div class="journey-entry__spine-dot"></div>
+          <div class="journey-entry__spine-line"></div>
+        </div>
+        <div class="journey-entry__content">
+          <h3>One of six teams selected</h3>
+          <p class="journey-entry__body">LifeLoop was selected to be a provincial finalist for AGrobotics — we were chosen to be one of <strong>six teams</strong> to present at the <strong>Western Fair District Agricultural showcase</strong>.</p>
+        </div>
+      </div>
+
+      <div class="journey-entry reveal">
+        <div class="journey-entry__tag">THE SHOWCASE</div>
+        <div class="journey-entry__spine">
+          <div class="journey-entry__spine-dot"></div>
+          <div class="journey-entry__spine-line"></div>
+        </div>
+        <div class="journey-entry__content">
+          <h3>Real farmers. Real demand.</h3>
+          <p class="journey-entry__body">It was at this showcase that we began to see the true potential of LifeLoop. We presented the solution to real farmers, and realized that there was actual demand for a solution like this.</p>
+          <p class="journey-entry__body">We were encouraged by several attending AGtech CEOs (including the judges) to take LifeLoop beyond a competition project.</p>
+        </div>
+      </div>
+
+      <div class="journey-entry reveal">
+        <div class="journey-entry__tag">MARCH · AGROBOTICS FINALS</div>
+        <div class="journey-entry__spine">
+          <div class="journey-entry__spine-dot"></div>
+          <div class="journey-entry__spine-line"></div>
+        </div>
+        <div class="journey-entry__content">
+          <h3>First place · Ontario</h3>
+          <p class="journey-entry__body">When LifeLoop won first place across Ontario, it only solidified what we were already beginning to understand — this project had potential.</p>
+        </div>
+      </div>
+
+      <div class="journey-entry journey-entry--current reveal">
+        <div class="journey-entry__tag">NOW · BUILDING V3</div>
+        <div class="journey-entry__spine">
+          <div class="journey-entry__spine-dot"></div>
+        </div>
+        <div class="journey-entry__content">
+          <h3>Taking it to market</h3>
+          <p class="journey-entry__body">Since the AGrobotics competition (which took place in March), we've been thinking this over as a team and have been doing some market validation/research. We've emailed farmers, met with startup investors for advice, and analyzed competitors on the market.</p>
+          <p class="journey-entry__body">We have decided to take LifeLoop a step further, and try to turn it into an actual startup. Right now, we're in the process of designing a market ready product (<strong>LifeLoop V3</strong>). We're currently seeking funding, strategic guidance, and industry connections to bring LifeLoop V3 to market and capture this underserved segment.</p>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Contact -->
-<section id="contact" class="section">
-  <div class="container">
-    <div class="section-tag reveal">Get in Touch</div>
-    <h2 class="section-title reveal">Bring STEMroots<br>to <span class="gradient-text">Your School</span></h2>
-    <p class="section-subtitle reveal">Want to host a camp, partner with us, or just say hi? We'd love to hear from you.</p>
+<!-- ───────── Hub ───────── -->
+<section class="section section-rule section-tinted" id="hub">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <div class="eyebrow">The hub</div>
+        <h2 class="h-section">
+          Every LifeLoop, in<br>
+          <span class="italic-accent">one place.</span>
+        </h2>
+      </div>
+      <p class="body" style="font-size:16">
+        The LifeLoop Hub connects every incubator into a single real-time dashboard. Temperature, humidity, candling results, alerts. From anywhere.
+      </p>
+    </div>
 
-    <div class="contact-grid">
+    <div class="hub reveal" id="hub-mock">
+      <div class="hub__bar">
+        <div class="hub__dots"><span></span><span></span><span></span></div>
+        <div class="hub__url">loopedeggs.ca / hub</div>
+        <div class="hub__live">● LIVE</div>
+      </div>
+      <div class="hub__body">
+        <aside class="hub__sidebar">
+          <div class="hub__sidebar-head">WORKSPACE</div>
+          <div class="hub__sidebar-list">
+            <div class="hub__sidebar-item active">Dashboard</div>
+            <div class="hub__sidebar-item">Incubators</div>
+            <div class="hub__sidebar-item">Analytics</div>
+            <div class="hub__sidebar-item">Alerts</div>
+            <div class="hub__sidebar-item">Settings</div>
+          </div>
+        </aside>
+        <div class="hub__main">
+          <div class="hub__stats">
+            <div class="hub__stat">
+              <div class="hub__stat-row">
+                <div class="hub__stat-num">247</div>
+                <svg class="hub__sparkline" width="80" height="26" viewBox="0 0 80 26" aria-hidden="true">
+                  <polyline points="0,22 7,20 14,18 21,20 28,16 35,14 42,12 49,10 56,6 63,8 70,4 80,2" fill="none" stroke="#7FA257" stroke-width="1"/>
+                </svg>
+              </div>
+              <div class="hub__stat-lbl">ACTIVE EGGS</div>
+            </div>
+            <div class="hub__stat">
+              <div class="hub__stat-row">
+                <div class="hub__stat-num hub__stat-num--mute">3</div>
+                <svg class="hub__sparkline" width="80" height="26" viewBox="0 0 80 26" aria-hidden="true">
+                  <polyline points="0,13 8,13 16,13 24,13 32,13 40,13 48,13 56,13 64,13 72,13 80,13" fill="none" stroke="#8A8678" stroke-width="1"/>
+                </svg>
+              </div>
+              <div class="hub__stat-lbl">INCUBATORS ONLINE</div>
+            </div>
+            <div class="hub__stat">
+              <div class="hub__stat-row">
+                <div class="hub__stat-num hub__stat-num--leaf">94%</div>
+                <svg class="hub__sparkline" width="80" height="26" viewBox="0 0 80 26" aria-hidden="true">
+                  <polyline points="0,18 8,16 16,14 24,12 32,14 40,10 48,8 56,8 64,4 72,4 80,4" fill="none" stroke="#A9C57F" stroke-width="1"/>
+                </svg>
+              </div>
+              <div class="hub__stat-lbl">EST. HATCH RATE</div>
+            </div>
+          </div>
 
-      <a href="mailto:stemrootsontario@gmail.com" class="contact-card reveal">
-        <div class="contact-icon" aria-hidden="true">✉️</div>
-        <h3>Email Us</h3>
-        <p>stemrootsontario@gmail.com</p>
-        <span class="contact-cta">Send a message →</span>
-      </a>
-
-      <a href="https://www.instagram.com/" target="_blank" rel="noopener" class="contact-card contact-ig reveal">
-        <div class="ig-logo" aria-hidden="true">
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-          </svg>
+          <div class="hub__unit">
+            <div class="hub__unit-head">
+              <div class="hub__unit-name">Barn Unit A</div>
+              <div class="hub__unit-status hub__unit-status--online">ONLINE</div>
+            </div>
+            <div class="hub__unit-data"><span>37.5°C</span><span>55%</span><span>82 eggs</span><span>Day 12</span></div>
+            <div class="hub__unit-bar"><div class="hub__unit-bar-fill hub__unit-bar-fill--online" data-width="57%"></div></div>
+          </div>
+          <div class="hub__unit">
+            <div class="hub__unit-head">
+              <div class="hub__unit-name">Coop Unit B</div>
+              <div class="hub__unit-status hub__unit-status--online">ONLINE</div>
+            </div>
+            <div class="hub__unit-data"><span>37.5°C</span><span>57%</span><span>96 eggs</span><span>Day 7</span></div>
+            <div class="hub__unit-bar"><div class="hub__unit-bar-fill hub__unit-bar-fill--online" data-width="33%"></div></div>
+          </div>
+          <div class="hub__unit">
+            <div class="hub__unit-head">
+              <div class="hub__unit-name">Storage Unit C</div>
+              <div class="hub__unit-status hub__unit-status--lockdown">LOCKDOWN</div>
+            </div>
+            <div class="hub__unit-data"><span>37.8°C</span><span>65%</span><span>69 eggs</span><span>Day 19</span></div>
+            <div class="hub__unit-bar"><div class="hub__unit-bar-fill hub__unit-bar-fill--lockdown" data-width="90%"></div></div>
+          </div>
         </div>
-        <h3>Follow on Instagram</h3>
-        <p>Behind-the-scenes, camp recaps, and announcements.</p>
-        <span class="contact-cta">Follow us →</span>
-      </a>
-
+      </div>
+    </div>
+    <div class="hub__caption reveal">
+      <span>FIG. 05 · HUB DASHBOARD · MOCK</span>
+      <span>SHIPPING WITH LIFELOOP V3</span>
     </div>
   </div>
 </section>
 
-<!-- Footer -->
-<footer class="site-footer">
-  <div class="container">
-    <div class="footer-top">
-      <div class="footer-brand">
-        <div class="footer-logo">
-          <svg width="18" height="18" viewBox="0 0 22 22" fill="none" aria-hidden="true">
-            <circle cx="11" cy="11" r="9" stroke="#5A8C36" stroke-width="2.2" stroke-dasharray="4 2"/>
-          </svg>
-          STEMroots
+<!-- ───────── Join ───────── -->
+<section class="section" id="follow">
+  <div class="wrap">
+    <div class="section-head section-head--single reveal">
+      <div class="eyebrow">Join us</div>
+      <h2 class="h-section" style="margin-bottom:28px">
+        Building the future of<br>
+        <span class="italic-accent">small-scale agriculture.</span>
+      </h2>
+      <p class="lede">
+        LifeLoop V3 is in active development. We are looking for three things — funding, strategic guidance, and industry connections to bring LifeLoop V3 to market and capture this underserved segment.
+      </p>
+    </div>
+
+    <div class="join-grid">
+      <div class="join-card reveal">
+        <div class="join-card__head">
+          <div class="join-card__icon"><svg width="28" height="28" aria-hidden="true"><use href="#i-seed"/></svg></div>
+          <span class="join-card__idx">01</span>
         </div>
-        <p>Student-led STEM nonprofit running free, hands-on workshops for students aged 4-12.</p>
-        <p class="footer-slogan">Curiosity. Innovation. Roots.</p>
+        <h3>Funding</h3>
+        <p class="join-card__body">Seed funding to accelerate LifeLoop V3 development, manufacturing and go-to-market.</p>
       </div>
-      <div class="footer-links">
-        <div class="footer-col">
-          <h4>Explore</h4>
-          <a href="#about">About</a>
-          <a href="#programs">Programs</a>
-          <a href="#locations">Locations</a>
+      <div class="join-card reveal">
+        <div class="join-card__head">
+          <div class="join-card__icon"><svg width="28" height="28" aria-hidden="true"><use href="#i-compass"/></svg></div>
+          <span class="join-card__idx">02</span>
         </div>
-        <div class="footer-col">
-          <h4>Connect</h4>
-          <a href="mailto:stemrootsontario@gmail.com">Email</a>
-          <a href="https://www.instagram.com/" target="_blank" rel="noopener">Instagram</a>
+        <h3>Strategic guidance</h3>
+        <p class="join-card__body">Experienced advisors in agriculture, hardware and deep-tech startups to guide our path to market.</p>
+      </div>
+      <div class="join-card reveal">
+        <div class="join-card__head">
+          <div class="join-card__icon"><svg width="28" height="28" aria-hidden="true"><use href="#i-link"/></svg></div>
+          <span class="join-card__idx">03</span>
+        </div>
+        <h3>Industry connections</h3>
+        <p class="join-card__body">Introductions to farmers, agricultural co-ops, distributors and key players in small-scale agriculture.</p>
+      </div>
+    </div>
+
+    <div class="contact reveal">
+      <div class="contact__head">
+        <span class="left">Get in touch</span>
+        <span class="right">RESPONSE WITHIN 48 HOURS</span>
+      </div>
+      <h3>Send us a note.</h3>
+      <p class="contact__intro">Interested in investing, partnering, or just learning more? Tell us a little about yourself and how you'd like to work with us.</p>
+      <form id="contact-form" novalidate>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="cf-name">Name</label>
+            <input type="text" id="cf-name" name="name" placeholder="Your name" required autocomplete="name">
+          </div>
+          <div class="form-group">
+            <label for="cf-email">Email</label>
+            <input type="email" id="cf-email" name="email" placeholder="you@example.com" required autocomplete="email">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="cf-subject">I'm interested in</label>
+          <select id="cf-subject" name="subject">
+            <option value="funding">Funding / Investment</option>
+            <option value="guidance">Strategic Guidance</option>
+            <option value="connections">Industry Connections</option>
+            <option value="partnership">Partnership</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="cf-message">Message</label>
+          <textarea id="cf-message" name="message" placeholder="Tell us about yourself and how you'd like to work with us…" required></textarea>
+        </div>
+        <button type="submit" class="btn btn--primary" style="width:100%">
+          Send message
+          <svg class="btn-arrow" width="14" height="14" aria-hidden="true"><use href="#i-arrow"/></svg>
+        </button>
+        <div id="form-status" class="form-status" role="status" aria-live="polite"></div>
+      </form>
+    </div>
+
+    <div class="follow-strip reveal">
+      <div>
+        <div class="follow-strip__eyebrow">FOLLOW THE BUILD</div>
+        <h3>Behind-the-scenes updates from the workshop.</h3>
+        <p class="follow-strip__body">V3 development, farm testing, launch news. Roughly twice a month.</p>
+      </div>
+      <div class="follow-strip__actions">
+        <a class="btn btn--primary" href="https://www.instagram.com/lifeloop_tech?igsh=MWljY2FnbmtnOTJlaQ==" target="_blank" rel="noopener">
+          @lifeloop_tech
+          <svg class="btn-arrow" width="14" height="14" aria-hidden="true"><use href="#i-arrow"/></svg>
+        </a>
+        <a class="btn btn--ghost" href="mailto:hello@loopedeggs.ca">hello@loopedeggs.ca</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ───────── Footer ───────── -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer__top">
+      <div>
+        <div class="footer__brand">
+          <svg width="28" height="28" aria-hidden="true"><use href="#brand-mark"/></svg>
+          <span>LifeLoop</span>
+        </div>
+        <p class="footer__brand-text">The world's first fully automated small-scale egg incubator.</p>
+        <p class="footer__slogan">Set it. Forget it.</p>
+      </div>
+      <div>
+        <div class="footer__col-head">Product</div>
+        <div class="footer__col-list">
+          <a href="#problem">The problem</a>
+          <a href="#solution">Solution</a>
+          <a href="#process">How it works</a>
+          <a href="#hub">The Hub</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer__col-head">Company</div>
+        <div class="footer__col-list">
+          <a href="#story">Our story</a>
+          <a href="#follow">Investors</a>
+          <a href="#follow">Contact</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer__col-head">Connect</div>
+        <div class="footer__col-list">
+          <a href="https://www.instagram.com/lifeloop_tech?igsh=MWljY2FnbmtnOTJlaQ==" target="_blank" rel="noopener">Instagram</a>
+          <a href="mailto:hello@loopedeggs.ca">Email</a>
+          <a href="#story">AGrobotics</a>
         </div>
       </div>
     </div>
-    <div class="footer-bottom">
-      <span>© 2026 STEMroots, Milton, Ontario</span>
-      <span>🌱 Student-led, Always free</span>
+    <div class="footer__bottom">
+      <span class="footer__bottom-mono">© 2026 LIFELOOP · LOOPEDEGGS.CA · ONTARIO, CANADA</span>
+      <div class="footer__medal">
+        <svg width="16" height="16" aria-hidden="true"><use href="#i-medal"/></svg>
+        <span>1ST PLACE · ONTARIO AGROBOTICS</span>
+      </div>
     </div>
   </div>
 </footer>

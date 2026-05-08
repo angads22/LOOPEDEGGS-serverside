@@ -1,314 +1,329 @@
 'use strict';
 
-// ── Navbar ────────────────────────────────────────────────────
-const navbar = document.getElementById('navbar');
-const navToggle = document.getElementById('nav-toggle');
-const navLinks = document.getElementById('nav-links');
+/* ============================================================
+   LifeLoop — main.js
+   ============================================================ */
 
-window.addEventListener('scroll', () => {
-  navbar.classList.toggle('scrolled', window.scrollY > 40);
-}, { passive: true });
+const $  = (sel, root = document) => root.querySelector(sel);
+const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
 
-navToggle.addEventListener('click', () => {
-  const open = navLinks.classList.toggle('open');
-  navToggle.setAttribute('aria-expanded', String(open));
-});
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-navLinks.querySelectorAll('a').forEach(a => {
-  a.addEventListener('click', () => {
-    navLinks.classList.remove('open');
-    navToggle.setAttribute('aria-expanded', 'false');
-  });
-});
-
-// ── Scroll Reveal (with staggered delays) ──────────────────
-const staggerGroups = [
-  '.features-grid',
-  '.problem-effects',
-  '.seek-grid',
-  '.story-timeline',
-];
-
-staggerGroups.forEach(selector => {
-  const container = document.querySelector(selector);
-  if (!container) return;
-  [...container.children].forEach((child, i) => {
-    if (child.classList.contains('reveal')) {
-      child.style.setProperty('--stagger-delay', `${i * 0.11}s`);
+/* ── Hero incubator: render egg tray ─────────────────────── */
+(function renderHeroEggs() {
+  const g = document.getElementById('hero-eggs');
+  if (!g) return;
+  const ns = 'http://www.w3.org/2000/svg';
+  for (let row = 0; row < 3; row++) {
+    for (let col = 0; col < 5; col++) {
+      const cx = 120 + col * 60;
+      const cy = 130 + row * 50;
+      const isHighlight = row === 1 && col === 2;
+      const ellipse = document.createElementNS(ns, 'ellipse');
+      ellipse.setAttribute('cx', cx);
+      ellipse.setAttribute('cy', cy);
+      ellipse.setAttribute('rx', '14');
+      ellipse.setAttribute('ry', '18');
+      if (isHighlight) {
+        ellipse.setAttribute('fill', 'url(#shell)');
+        ellipse.setAttribute('stroke', '#7FA257');
+        ellipse.setAttribute('stroke-width', '1');
+      } else {
+        ellipse.setAttribute('fill', 'rgba(239,235,223,0.06)');
+        ellipse.setAttribute('stroke', 'rgba(239,235,223,0.18)');
+        ellipse.setAttribute('stroke-width', '0.6');
+      }
+      g.appendChild(ellipse);
+      if (isHighlight) {
+        const ring = document.createElementNS(ns, 'circle');
+        ring.setAttribute('cx', cx);
+        ring.setAttribute('cy', cy);
+        ring.setAttribute('r', '22');
+        ring.setAttribute('fill', 'none');
+        ring.setAttribute('stroke', '#7FA257');
+        ring.setAttribute('stroke-width', '0.5');
+        ring.setAttribute('stroke-dasharray', '2 2');
+        g.appendChild(ring);
+        const lead = document.createElementNS(ns, 'line');
+        lead.setAttribute('x1', cx + 22);
+        lead.setAttribute('y1', cy);
+        lead.setAttribute('x2', '380');
+        lead.setAttribute('y2', '200');
+        lead.setAttribute('stroke', '#7FA257');
+        lead.setAttribute('stroke-width', '0.5');
+        g.appendChild(lead);
+        const tip = document.createElementNS(ns, 'circle');
+        tip.setAttribute('cx', '380');
+        tip.setAttribute('cy', '200');
+        tip.setAttribute('r', '2');
+        tip.setAttribute('fill', '#7FA257');
+        g.appendChild(tip);
+      }
     }
-  });
-});
-
-document.querySelectorAll('.steps-container .step').forEach((el, i) => {
-  el.style.setProperty('--stagger-delay', `${i * 0.15}s`);
-});
-
-const revealObserver = new IntersectionObserver((entries) => {
-  entries.forEach(({ target, isIntersecting }) => {
-    if (!isIntersecting) return;
-    target.classList.add('visible');
-    revealObserver.unobserve(target);
-  });
-}, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
-
-document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
-
-// ── Counter Animation ──────────────────────────────────────
-function animateCounter(el, target, duration, prefix, suffix) {
-  const start = performance.now();
-  const isInt = Number.isInteger(target);
-
-  function tick(now) {
-    const elapsed = Math.min((now - start) / duration, 1);
-    const eased = 1 - Math.pow(1 - elapsed, 3);
-    const current = Math.round(target * eased);
-    el.textContent = prefix + (isInt ? current : current) + suffix;
-    if (elapsed < 1) requestAnimationFrame(tick);
-    else el.textContent = prefix + target + suffix;
   }
-  requestAnimationFrame(tick);
-}
+})();
 
-let countersStarted = false;
-const statsObserver = new IntersectionObserver(([entry]) => {
-  if (!entry.isIntersecting || countersStarted) return;
-  countersStarted = true;
-  statsObserver.disconnect();
+/* ── Solution cutaway: render trays ──────────────────────── */
+(function renderCutawayTrays() {
+  const g = document.getElementById('cutaway-trays');
+  if (!g) return;
+  const ns = 'http://www.w3.org/2000/svg';
+  for (let layer = 0; layer < 3; layer++) {
+    const y = 120 + layer * 70;
+    const baseline = document.createElementNS(ns, 'line');
+    baseline.setAttribute('x1', '60');
+    baseline.setAttribute('y1', y + 30);
+    baseline.setAttribute('x2', '300');
+    baseline.setAttribute('y2', y + 30);
+    baseline.setAttribute('stroke', '#383E33');
+    baseline.setAttribute('stroke-width', '0.6');
+    g.appendChild(baseline);
+    for (let i = 0; i < 7; i++) {
+      const e = document.createElementNS(ns, 'ellipse');
+      e.setAttribute('cx', 80 + i * 33);
+      e.setAttribute('cy', y + 22);
+      e.setAttribute('rx', '9');
+      e.setAttribute('ry', '13');
+      e.setAttribute('fill', 'rgba(239,235,223,0.05)');
+      e.setAttribute('stroke', 'rgba(239,235,223,0.22)');
+      e.setAttribute('stroke-width', '0.6');
+      g.appendChild(e);
+    }
+    const lbl = document.createElementNS(ns, 'text');
+    lbl.setAttribute('x', '62');
+    lbl.setAttribute('y', y + 5);
+    lbl.setAttribute('font-family', 'IBM Plex Mono');
+    lbl.setAttribute('font-size', '7');
+    lbl.setAttribute('fill', '#8A8678');
+    lbl.setAttribute('letter-spacing', '0.1em');
+    lbl.textContent = `TRAY ${layer + 1}`;
+    g.appendChild(lbl);
+  }
+})();
 
-  document.querySelectorAll('[data-counter]').forEach(el => {
-    const target  = Number(el.dataset.target);
-    const prefix  = el.dataset.prefix  || '';
-    const suffix  = el.dataset.suffix  || '';
-    const duration = target === 1 ? 900 : (target === 100 ? 1600 : 800);
-    animateCounter(el, target, duration, prefix, suffix);
+/* ── Mobile nav toggle ──────────────────────────────────── */
+(function initNavToggle() {
+  const toggle = $('#nav-toggle');
+  const links  = $('#nav-links');
+  if (!toggle || !links) return;
+
+  toggle.addEventListener('click', () => {
+    const open = links.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', String(open));
   });
-}, { threshold: 0.5 });
 
-const heroStats = document.querySelector('.hero-stats');
-if (heroStats) statsObserver.observe(heroStats);
+  $$('#nav-links a').forEach(a => {
+    a.addEventListener('click', () => {
+      links.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+})();
 
-// ── Story Timeline Dot Sequential Animation ────────────────
-const storyDots = document.querySelectorAll('.st-dot');
+/* ── Active section highlight in nav ────────────────────── */
+(function initNavActive() {
+  const sections = $$('section[id]');
+  const links = $$('#nav-links a[href^="#"]');
+  if (!sections.length || !links.length) return;
 
-if (storyDots.length) {
-  const storyObserver = new IntersectionObserver((entries) => {
+  const observer = new IntersectionObserver((entries) => {
     entries.forEach(({ target, isIntersecting }) => {
       if (!isIntersecting) return;
-      const idx = [...storyDots].indexOf(target);
-      storyDots.forEach((dot, i) => {
-        if (i <= idx && !dot.classList.contains('animated')) {
-          setTimeout(() => dot.classList.add('animated'), i * 200);
-        }
-      });
+      const id = target.getAttribute('id');
+      links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === `#${id}`));
     });
-  }, { threshold: 0.5, rootMargin: '0px 0px -60px 0px' });
+  }, { threshold: 0.3, rootMargin: '-80px 0px -55% 0px' });
 
-  storyDots.forEach(dot => storyObserver.observe(dot));
-}
+  sections.forEach(s => observer.observe(s));
+})();
 
-// ── Hub Progress Bar Animation ────────────────────────────
-const hubSection = document.querySelector('#hub');
-const hubBars = document.querySelectorAll('.hm-bar');
+/* ── Reveal on scroll (with light staggering) ──────────── */
+(function initReveal() {
+  const staggerGroups = ['.problem-rows', '.steps', '.journey', '.join-grid', '.capability-list'];
+  staggerGroups.forEach(sel => {
+    const group = $(sel);
+    if (!group) return;
+    [...group.children]
+      .filter(c => c.classList.contains('reveal'))
+      .forEach((c, i) => c.style.setProperty('--stagger-delay', `${i * 0.08}s`));
+  });
 
-if (hubSection && hubBars.length) {
-  let hubAnimated = false;
-  const hubObserver = new IntersectionObserver(([entry]) => {
-    if (!entry.isIntersecting || hubAnimated) return;
-    hubAnimated = true;
-    hubObserver.disconnect();
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(({ target, isIntersecting }) => {
+      if (!isIntersecting) return;
+      target.classList.add('visible');
+      observer.unobserve(target);
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
-    hubBars.forEach((bar, i) => {
-      const target = bar.dataset.width || '0%';
-      setTimeout(() => {
-        bar.style.width = target;
-      }, i * 180);
+  $$('.reveal').forEach(el => observer.observe(el));
+})();
+
+/* ── Hero stat counters ────────────────────────────────── */
+(function initCounters() {
+  const counters = $$('[data-counter]');
+  if (!counters.length) return;
+
+  function animate(el, target, duration, suffix) {
+    if (reduceMotion) {
+      el.textContent = target + suffix;
+      return;
+    }
+    const start = performance.now();
+    function tick(now) {
+      const t = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - t, 3);
+      const value = Math.round(target * eased);
+      el.textContent = value + suffix;
+      if (t < 1) requestAnimationFrame(tick);
+      else el.textContent = target + suffix;
+    }
+    requestAnimationFrame(tick);
+  }
+
+  let started = false;
+  const observer = new IntersectionObserver(([entry]) => {
+    if (!entry.isIntersecting || started) return;
+    started = true;
+    observer.disconnect();
+    counters.forEach(el => {
+      const target = Number(el.dataset.target);
+      const suffix = el.dataset.suffix || '';
+      const duration = target === 0 ? 600 : (target >= 100 ? 1500 : 1100);
+      animate(el, target, duration, suffix);
+    });
+  }, { threshold: 0.5 });
+
+  observer.observe(counters[0].closest('.hero__stats') || counters[0]);
+})();
+
+/* ── Hub progress bars ─────────────────────────────────── */
+(function initHubBars() {
+  const hub = $('#hub-mock');
+  const bars = $$('.hub__unit-bar-fill', hub);
+  if (!hub || !bars.length) return;
+
+  let played = false;
+  const observer = new IntersectionObserver(([entry]) => {
+    if (!entry.isIntersecting || played) return;
+    played = true;
+    observer.disconnect();
+    bars.forEach((bar, i) => {
+      const w = bar.dataset.width || '0%';
+      setTimeout(() => { bar.style.width = w; }, i * 180);
     });
   }, { threshold: 0.3 });
+  observer.observe(hub);
+})();
 
-  hubObserver.observe(hubSection);
-}
+/* ── Cycle phase reveal + events ───────────────────────── */
+(function initCycle() {
+  const cycle = $('#cycle');
+  if (!cycle) return;
+  const phases = $$('.cycle__phase', cycle);
+  const events = $$('.cycle__event', cycle);
 
-// ── Cycle Timeline Animation ──────────────────────────────
-const cycleTimeline = document.querySelector('.cycle-timeline');
-const cyclePhases = document.querySelectorAll('.cycle-phase');
-const cycleEvents = document.querySelectorAll('.cycle-event');
+  let played = false;
+  const observer = new IntersectionObserver(([entry]) => {
+    if (!entry.isIntersecting || played) return;
+    played = true;
+    observer.disconnect();
+    phases.forEach((p, i) => setTimeout(() => p.classList.add('visible'), i * 160));
+    events.forEach((e, i) => setTimeout(() => e.classList.add('visible'), 480 + i * 140));
+  }, { threshold: 0.35 });
+  observer.observe(cycle);
+})();
 
-if (cycleTimeline) {
-  let cycleAnimated = false;
-  const cycleObserver = new IntersectionObserver(([entry]) => {
-    if (!entry.isIntersecting || cycleAnimated) return;
-    cycleAnimated = true;
-    cycleObserver.disconnect();
-
-    cyclePhases.forEach((phase, i) => {
-      const target = phase.dataset.width || phase.style.width || '0%';
-      phase.style.width = '0%';
-      setTimeout(() => {
-        phase.style.width = target;
-      }, i * 150);
-    });
-
-    cycleEvents.forEach((ev, i) => {
-      setTimeout(() => {
-        ev.classList.add('animate');
-      }, 500 + i * 150);
-    });
-  }, { threshold: 0.4 });
-
-  cycleObserver.observe(cycleTimeline);
-}
-
-// ── Hero Canvas Animation (Enhanced) ───────────────────────
+/* ── Hero canvas: subtle drifting field ────────────────── */
 (function initCanvas() {
-  const canvas = document.getElementById('hero-canvas');
-  if (!canvas) return;
+  const canvas = $('#hero-canvas');
+  if (!canvas || reduceMotion) return;
   const ctx = canvas.getContext('2d');
 
   function resize() {
-    canvas.width  = window.innerWidth;
-    canvas.height = window.innerHeight;
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width  = canvas.offsetWidth  * dpr;
+    canvas.height = canvas.offsetHeight * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   }
-  resize();
-  window.addEventListener('resize', resize, { passive: true });
+  function sizeFromHero() {
+    const hero = canvas.parentElement;
+    canvas.style.width  = hero.offsetWidth + 'px';
+    canvas.style.height = hero.offsetHeight + 'px';
+    resize();
+  }
+  sizeFromHero();
+  window.addEventListener('resize', sizeFromHero, { passive: true });
 
-  const COUNT = Math.min(80, Math.floor(window.innerWidth / 16));
+  const W = () => canvas.offsetWidth;
+  const H = () => canvas.offsetHeight;
 
-  const COLORS = [
-    [90, 140, 54],
-    [143, 203, 68],
-    [163, 212, 90],
-    [70, 107, 42],
-    [107, 76, 42],
-  ];
+  const COUNT = Math.min(50, Math.floor(W() / 24));
 
   class Particle {
     constructor(scatter) { this.init(scatter); }
     init(scatter) {
-      this.x      = Math.random() * canvas.width;
-      this.y      = scatter ? Math.random() * canvas.height : canvas.height + 20;
-      this.vy     = -(Math.random() * 0.5 + 0.15);
-      this.vx     = (Math.random() - 0.5) * 0.3;
-      this.r      = Math.random() * 4 + 1;
-      this.phase  = Math.random() * Math.PI * 2;
-      this.speed  = Math.random() * 0.015 + 0.010;
-      this.alpha  = 0;
-      this.wobble = Math.random() * 0.008 + 0.003;
-      this.wobblePhase = Math.random() * Math.PI * 2;
-      const [r, g, b] = COLORS[Math.floor(Math.random() * COLORS.length)];
-      this.color = `${r},${g},${b}`;
-      this.isEgg = Math.random() < 0.15;
+      this.x = Math.random() * W();
+      this.y = scatter ? Math.random() * H() : H() + 20;
+      this.vy = -(Math.random() * 0.25 + 0.08);
+      this.vx = (Math.random() - 0.5) * 0.15;
+      this.r = Math.random() * 1.6 + 0.6;
+      this.phase = Math.random() * Math.PI * 2;
+      this.speed = Math.random() * 0.012 + 0.006;
     }
     update() {
-      this.x += this.vx + Math.sin(this.wobblePhase) * this.wobble * 8;
+      this.x += this.vx;
       this.y += this.vy;
       this.phase += this.speed;
-      this.wobblePhase += this.wobble;
-      this.alpha = Math.sin(this.phase) * 0.22 + 0.12;
-      if (this.y < -20) this.init(false);
+      if (this.y < -10) this.init(false);
     }
     draw() {
       ctx.save();
-      ctx.globalAlpha = Math.max(0, this.alpha);
+      ctx.globalAlpha = (Math.sin(this.phase) * 0.18 + 0.22);
       ctx.beginPath();
-      if (this.isEgg) {
-        ctx.ellipse(this.x, this.y, this.r * 0.65, this.r, 0, 0, Math.PI * 2);
-      } else {
-        ctx.arc(this.x, this.y, this.r * 0.5, 0, Math.PI * 2);
-      }
-      ctx.fillStyle = `rgb(${this.color})`;
+      ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+      ctx.fillStyle = '#7FA257';
       ctx.fill();
       ctx.restore();
     }
   }
 
-  function drawConnections(particles) {
-    const MAX_DIST = 90;
+  const particles = Array.from({ length: COUNT }, () => new Particle(true));
+
+  function frame() {
+    ctx.clearRect(0, 0, W(), H());
+    const grd = ctx.createRadialGradient(W() * 0.6, H() * 0.4, 0, W() * 0.6, H() * 0.4, W() * 0.55);
+    grd.addColorStop(0,   'rgba(127,162,87,0.05)');
+    grd.addColorStop(0.5, 'rgba(127,162,87,0.02)');
+    grd.addColorStop(1,   'transparent');
+    ctx.fillStyle = grd;
+    ctx.fillRect(0, 0, W(), H());
+
     for (let i = 0; i < particles.length; i++) {
       for (let j = i + 1; j < particles.length; j++) {
         const dx = particles[i].x - particles[j].x;
         const dy = particles[i].y - particles[j].y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < MAX_DIST) {
-          const opacity = (1 - dist / MAX_DIST) * 0.04;
+        const d = Math.hypot(dx, dy);
+        if (d < 110) {
           ctx.beginPath();
           ctx.moveTo(particles[i].x, particles[i].y);
           ctx.lineTo(particles[j].x, particles[j].y);
-          ctx.strokeStyle = `rgba(90,140,54,${opacity})`;
-          ctx.lineWidth = 0.8;
+          ctx.strokeStyle = `rgba(127,162,87,${(1 - d / 110) * 0.04})`;
+          ctx.lineWidth = 0.6;
           ctx.stroke();
         }
       }
     }
-  }
-
-  const particles = Array.from({ length: COUNT }, () => new Particle(true));
-
-  let scrollY = 0;
-  window.addEventListener('scroll', () => { scrollY = window.scrollY; }, { passive: true });
-
-  function frame() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    const grdY = canvas.height * 0.42 - scrollY * 0.05;
-    const grd = ctx.createRadialGradient(
-      canvas.width * .5, grdY, 0,
-      canvas.width * .5, grdY, canvas.width * .65
-    );
-    grd.addColorStop(0,   'rgba(90,140,54,0.08)');
-    grd.addColorStop(0.4, 'rgba(61,107,46,0.04)');
-    grd.addColorStop(0.7, 'rgba(107,76,42,0.015)');
-    grd.addColorStop(1,   'transparent');
-    ctx.fillStyle = grd;
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    drawConnections(particles);
     particles.forEach(p => { p.update(); p.draw(); });
     requestAnimationFrame(frame);
   }
   frame();
 })();
 
-// ── Hero Parallax ──────────────────────────────────────────
-(function initParallax() {
-  const heroContent = document.querySelector('.hero-content');
-  const scrollHint  = document.querySelector('.hero-scroll-hint');
-  if (!heroContent) return;
-
-  const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
-  if (mq.matches) return;
-
-  window.addEventListener('scroll', () => {
-    const y = window.scrollY;
-    heroContent.style.transform = `translateY(${y * 0.18}px)`;
-    if (scrollHint) scrollHint.style.transform =
-      `translateX(-50%) translateY(${y * 0.28}px)`;
-  }, { passive: true });
-})();
-
-// ── Nav Active State Tracking ──────────────────────────────
-(function initNavActive() {
-  const sections = document.querySelectorAll('section[id]');
-  const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
-  if (!sections.length || !navLinks.length) return;
-
-  const sectionObserver = new IntersectionObserver((entries) => {
-    entries.forEach(({ target, isIntersecting }) => {
-      if (!isIntersecting) return;
-      const id = target.getAttribute('id');
-      navLinks.forEach(link => {
-        const matches = link.getAttribute('href') === `#${id}`;
-        link.classList.toggle('nav-active', matches);
-      });
-    });
-  }, { threshold: 0.35, rootMargin: '-80px 0px -60% 0px' });
-
-  sections.forEach(sec => sectionObserver.observe(sec));
-})();
-
-// ── Contact Form ───────────────────────────────────────────
+/* ── Contact form ──────────────────────────────────────── */
 (function initForm() {
-  const form   = document.getElementById('contact-form');
-  const status = document.getElementById('form-status');
+  const form   = $('#contact-form');
+  const status = $('#form-status');
   if (!form) return;
 
   form.addEventListener('submit', async (e) => {
@@ -316,10 +331,10 @@ if (cycleTimeline) {
     status.className = 'form-status';
     status.textContent = '';
 
-    const btn  = form.querySelector('button[type="submit"]');
-    const orig = btn.textContent;
-    btn.textContent = 'Sending…';
+    const btn = form.querySelector('button[type="submit"]');
+    const orig = btn.innerHTML;
     btn.disabled = true;
+    btn.innerHTML = 'Sending…';
 
     const payload = Object.fromEntries(new FormData(form).entries());
 
@@ -329,10 +344,9 @@ if (cycleTimeline) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
       });
-
       if (res.ok) {
         status.className = 'form-status success';
-        status.textContent = "Message sent! We'll be in touch soon.";
+        status.textContent = "MESSAGE SENT · WE'LL BE IN TOUCH SOON";
         form.reset();
       } else {
         const body = await res.json().catch(() => ({}));
@@ -341,11 +355,11 @@ if (cycleTimeline) {
     } catch (err) {
       status.className = 'form-status error';
       status.textContent = err.message.includes('Server error')
-        ? 'Something went wrong. Please try again shortly.'
-        : err.message;
+        ? 'SOMETHING WENT WRONG · TRY AGAIN SHORTLY'
+        : err.message.toUpperCase();
     } finally {
-      btn.textContent = orig;
       btn.disabled = false;
+      btn.innerHTML = orig;
     }
   });
 })();
