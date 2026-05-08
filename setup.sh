@@ -11,6 +11,8 @@ APP_DIR="/opt/lifeloop"
 APP_USER="lifeloop"
 NODE_MAJOR="20"
 ADMIN_EMAIL="admin@loopedeggs.ca"
+REPO_URL="https://github.com/angads22/LOOPEDEGGS-serverside.git"
+BRANCH="main"
 
 # ── Colours ──────────────────────────────────────────────────────
 GRN='\033[0;32m'; YLW='\033[1;33m'; RED='\033[0;31m'; BLU='\033[0;34m'; NC='\033[0m'
@@ -50,11 +52,26 @@ systemctl enable nginx
 
 hdr "App user & directory"
 id -u "$APP_USER" &>/dev/null || useradd -r -s /bin/false -d "$APP_DIR" "$APP_USER"
-mkdir -p "$APP_DIR"
 
-# Copy repo to app dir (excluding node_modules / .git)
-rsync -a --exclude node_modules --exclude .git --exclude "*.log" \
-      "$(pwd)/" "$APP_DIR/"
+# Deploy as a real git checkout so updates are `git pull`-able.
+if [[ -d "$APP_DIR/.git" ]]; then
+  log "Existing git checkout — fetching latest $BRANCH"
+  git -C "$APP_DIR" remote set-url origin "$REPO_URL"
+  git -C "$APP_DIR" fetch origin "$BRANCH"
+  git -C "$APP_DIR" reset --hard "origin/$BRANCH"
+elif [[ -d "$APP_DIR" ]] && [[ -n "$(ls -A "$APP_DIR" 2>/dev/null)" ]]; then
+  BACKUP="/opt/lifeloop.bak.$(date +%s)"
+  warn "$APP_DIR exists but is not a git checkout — moving to $BACKUP"
+  mv "$APP_DIR" "$BACKUP"
+  git clone --branch "$BRANCH" "$REPO_URL" "$APP_DIR"
+  # Restore runtime files that aren't tracked in the repo
+  [[ -d "$BACKUP/data" ]] && cp -r "$BACKUP/data" "$APP_DIR/"     && log "Restored $APP_DIR/data"
+  [[ -f "$BACKUP/.env" ]] && cp    "$BACKUP/.env" "$APP_DIR/.env" && log "Restored $APP_DIR/.env"
+else
+  mkdir -p "$(dirname "$APP_DIR")"
+  git clone --branch "$BRANCH" "$REPO_URL" "$APP_DIR"
+fi
+
 mkdir -p "$APP_DIR/data"
 chown -R "$APP_USER":"$APP_USER" "$APP_DIR"
 
@@ -181,7 +198,8 @@ echo ""
 echo -e "  ${GRN}LifeLoop Hub is live!${NC}"
 echo ""
 echo -e "  Site:           ${BLU}https://$DOMAIN${NC}"
-echo -e "  App directory:  ${BLU}$APP_DIR${NC}"
+echo -e "  App directory:  ${BLU}$APP_DIR${NC} (git checkout of ${BRANCH})"
+echo -e "  Update:         ${BLU}sudo $APP_DIR/deploy.sh${NC}"
 echo -e "  Logs:           ${BLU}journalctl -u lifeloop -f${NC}"
 echo -e "  Status:         ${BLU}systemctl status lifeloop${NC}"
 echo -e "  Nginx logs:     ${BLU}tail -f /var/log/nginx/access.log${NC}"
