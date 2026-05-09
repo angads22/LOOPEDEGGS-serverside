@@ -3,3 +3,6 @@ data/contacts.json
 .env
 *.log
 .DS_Store
+
+# Container build artifacts
+*.oci.tar

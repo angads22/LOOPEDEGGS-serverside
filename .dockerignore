@@ -1,0 +1,40 @@
+# Build context hygiene — keep the image tiny and rebuilds fast.
+
+# VCS / CI
+.git
+.github
+.gitignore
+.gitattributes
+
+# Dependencies (re-installed in image)
+node_modules
+npm-debug.log
+yarn-error.log
+
+# Local data & secrets — must NEVER end up baked into an image
+data
+.env
+.env.*
+!.env.example
+*.log
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+.vscode
+.idea
+*.swp
+
+# Docs / scripts not needed at runtime
+DOCKER.md
+README.md
+docs
+scripts
+setup.sh
+nginx
+
+# Test / build output
+coverage
+dist
+build
+.tmp

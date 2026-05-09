@@ -1,0 +1,102 @@
+# ============================================================================
+#  LifeLoop Hub — production stack
+#
+#  Two services:
+#    1. lifeloop   — the Node app, restarted automatically when a new image
+#                    is published.
+#    2. watchtower — polls the registry every 5 minutes and gracefully
+#                    redeploys lifeloop when a new tag is pushed.
+#
+#  Usage:
+#    Pull-from-registry mode (recommended for prod):
+#        docker compose pull && docker compose up -d
+#
+#    Build-locally mode (dev / air-gapped):
+#        docker compose --profile build up -d --build
+#
+#  See DOCKER.md for full instructions.
+# ============================================================================
+
+name: lifeloop
+
+services:
+  lifeloop:
+    # In production we pull the multi-arch image published by CI.
+    # Override LIFELOOP_IMAGE to pin a specific tag (e.g. v1.2.3 or a SHA).
+    image: ${LIFELOOP_IMAGE:-ghcr.io/angads22/loopedeggs-serverside:latest}
+    # The `build` block is only used by `docker compose build` or the
+    # "build" profile — it is ignored when pulling from the registry.
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        VERSION: ${VERSION:-dev}
+        VCS_REF: ${VCS_REF:-local}
+        BUILD_DATE: ${BUILD_DATE:-unknown}
+    container_name: lifeloop
+    restart: unless-stopped
+    init: true
+    ports:
+      - "${LIFELOOP_PORT:-3000}:3000"
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      ALLOWED_ORIGINS: ${ALLOWED_ORIGINS:-https://loopedeggs.ca,https://www.loopedeggs.ca}
+    env_file:
+      - path: .env
+        required: false
+    volumes:
+      # Persist contacts.json and any future on-disk state across restarts
+      # AND across image updates pushed by Watchtower.
+      - lifeloop-data:/app/data
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://127.0.0.1:3000/api/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+    labels:
+      # Tell Watchtower it is allowed to update this container.
+      com.centurylinklabs.watchtower.enable: "true"
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "5"
+    security_opt:
+      - no-new-privileges:true
+
+  # Watchtower polls the registry and atomically redeploys `lifeloop` when a
+  # new image is published with the same tag (e.g. `:latest` or `:stable`).
+  # Disable by setting profile != "auto-update" or by removing this service.
+  watchtower:
+    image: containrrr/watchtower:latest
+    container_name: lifeloop-watchtower
+    restart: unless-stopped
+    environment:
+      # Only touch containers that opt in via the label above.
+      WATCHTOWER_LABEL_ENABLE: "true"
+      # Check every 5 minutes.
+      WATCHTOWER_POLL_INTERVAL: "300"
+      # Remove old images after a successful update.
+      WATCHTOWER_CLEANUP: "true"
+      # Stop containers cleanly (SIGTERM, then SIGKILL after 30s).
+      WATCHTOWER_TIMEOUT: "30s"
+      # Quiet logs unless something happens.
+      WATCHTOWER_NO_STARTUP_MESSAGE: "true"
+      # Use a config.json mounted below for private-registry auth (optional).
+      DOCKER_CONFIG: /config
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      # Mount a docker config.json for ghcr.io auth if your image is private.
+      # Create with:  docker login ghcr.io   →   ~/.docker/config.json
+      - ${DOCKER_CONFIG_DIR:-~/.docker}:/config:ro
+    logging:
+      driver: json-file
+      options:
+        max-size: "5m"
+        max-file: "3"
+
+volumes:
+  lifeloop-data:
+    name: lifeloop-data

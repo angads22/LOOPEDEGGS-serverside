@@ -1,0 +1,107 @@
+# ============================================================================
+#  LifeLoop Hub — build and publish multi-arch container image to GHCR
+#
+#  Triggers:
+#    * push to main             → tags `latest` and the commit SHA
+#    * push of a v*.*.* tag     → tags semver (v1.2.3, 1.2, 1, latest)
+#    * manual dispatch          → tag whatever you choose
+#    * pull request             → build only, do not push (CI smoke test)
+#
+#  The image is published to:
+#    ghcr.io/<owner>/<repo>
+#  i.e. ghcr.io/angads22/loopedeggs-serverside
+#
+#  Watchtower running on the Pi will pick up the new `latest` (or `stable`)
+#  tag within 5 minutes and redeploy automatically.
+# ============================================================================
+name: Build & Publish Image
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*.*.*"]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Override image tag (default: branch/sha)"
+        required: false
+        type: string
+
+permissions:
+  contents: read
+  packages: write
+  id-token: write
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up QEMU (for arm64 emulation)
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to GitHub Container Registry
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract image metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=ref,event=branch
+            type=ref,event=pr
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=semver,pattern={{major}}
+            type=sha,prefix=sha-,format=short
+            type=raw,value=latest,enable={{is_default_branch}}
+            type=raw,value=${{ inputs.tag }},enable=${{ inputs.tag != '' }}
+          labels: |
+            org.opencontainers.image.title=LifeLoop Hub
+            org.opencontainers.image.description=LifeLoop Hub — central server for loopedeggs.ca
+            org.opencontainers.image.vendor=loopedeggs.ca
+
+      - name: Build and push
+        id: build
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ./Dockerfile
+          platforms: linux/amd64,linux/arm64
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          build-args: |
+            VERSION=${{ steps.meta.outputs.version }}
+            VCS_REF=${{ github.sha }}
+            BUILD_DATE=${{ steps.meta.outputs.created || github.event.head_commit.timestamp }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          provenance: true
+          sbom: true
+
+      - name: Image summary
+        if: github.event_name != 'pull_request'
+        run: |
+          echo "### Published image" >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+          echo "${{ steps.meta.outputs.tags }}" >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+          echo "Digest: \`${{ steps.build.outputs.digest }}\`" >> "$GITHUB_STEP_SUMMARY"
