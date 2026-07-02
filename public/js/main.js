@@ -56,13 +56,12 @@ document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 // ── Counter Animation ──────────────────────────────────────
 function animateCounter(el, target, duration, prefix, suffix) {
   const start = performance.now();
-  const isInt = Number.isInteger(target);
 
   function tick(now) {
     const elapsed = Math.min((now - start) / duration, 1);
     const eased = 1 - Math.pow(1 - elapsed, 3);
     const current = Math.round(target * eased);
-    el.textContent = prefix + (isInt ? current : current) + suffix;
+    el.textContent = prefix + current + suffix;
     if (elapsed < 1) requestAnimationFrame(tick);
     else el.textContent = prefix + target + suffix;
   }

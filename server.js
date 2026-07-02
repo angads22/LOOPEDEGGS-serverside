@@ -13,6 +13,11 @@ const { WebSocketServer } = require('ws');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Behind the nginx reverse proxy (see nginx/loopedeggs.conf). Trust the single
+// proxy hop so req.ip and express-rate-limit read the real client IP from
+// X-Forwarded-For instead of seeing 127.0.0.1 for every request.
+app.set('trust proxy', 1);
+
 // Persist contacts to disk
 const DATA_DIR = path.join(__dirname, 'data');
 const CONTACTS_FILE = path.join(DATA_DIR, 'contacts.json');

@@ -38,7 +38,7 @@ apt-get upgrade -y -qq
 apt-get install -y -qq curl wget git ufw fail2ban certbot python3-certbot-nginx
 
 hdr "Node.js $NODE_MAJOR"
-if ! command -v node &>/dev/null || [[ "$(node -e 'process.stdout.write(process.version.slice(1).split(\".\")[0])')" -lt "$NODE_MAJOR" ]]; then
+if ! command -v node &>/dev/null || [[ "$(node -p 'process.versions.node.split(".")[0]' 2>/dev/null)" -lt "$NODE_MAJOR" ]]; then
   curl -fsSL "https://deb.nodesource.com/setup_${NODE_MAJOR}.x" | bash -
   apt-get install -y nodejs
 fi
