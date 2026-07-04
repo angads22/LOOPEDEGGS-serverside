@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LifeLoop · Inspect</title>
+  <meta name="theme-color" content="#0E110D">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:wght@300;400&family=Geist:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/inspect.css">
+</head>
+<body class="inspect">
+
+<header class="inspect-bar">
+  <a class="back" href="/">← LifeLoop</a>
+
+  <label class="device-pick">
+    <span>Unit</span>
+    <select id="device-select">
+      <option value="">— select —</option>
+    </select>
+  </label>
+
+  <span class="conn" id="conn-status" data-state="connecting">connecting…</span>
+</header>
+
+<main class="inspect-grid">
+
+  <section class="viewer" id="viewer">
+    <div class="viewer-frame" id="viewer-frame">
+      <img id="cam" alt="Live camera feed" draggable="false">
+      <div class="reticle" id="reticle" hidden>
+        <span class="ret-h"></span><span class="ret-v"></span>
+      </div>
+      <div class="hud">
+        <span class="hud-pill" id="hud-pose">pan&nbsp;0.0°&nbsp;·&nbsp;tilt&nbsp;0.0°</span>
+        <span class="hud-pill" id="hud-fps">— fps</span>
+      </div>
+      <p class="empty" id="viewer-empty">Pick a unit to see its camera feed.</p>
+    </div>
+    <p class="hint">Click anywhere on the feed to point the head at that spot.</p>
+  </section>
+
+  <aside class="controls">
+
+    <fieldset>
+      <legend>Pan</legend>
+      <input type="range" id="pan" min="-90" max="90" step="1" value="0">
+      <output id="pan-out">0°</output>
+    </fieldset>
+
+    <fieldset>
+      <legend>Tilt</legend>
+      <input type="range" id="tilt" min="-60" max="60" step="1" value="0">
+      <output id="tilt-out">0°</output>
+    </fieldset>
+
+    <div class="row">
+      <button id="centre">Centre</button>
+      <button id="send-abs" class="primary">Move</button>
+    </div>
+
+    <fieldset>
+      <legend>Nudge</legend>
+      <div class="dpad">
+        <button data-nudge="up">↑</button>
+        <button data-nudge="left">←</button>
+        <button data-nudge="centre">·</button>
+        <button data-nudge="right">→</button>
+        <button data-nudge="down">↓</button>
+      </div>
+      <label class="step">
+        step <input type="number" id="step-deg" value="5" min="1" max="30">°
+      </label>
+    </fieldset>
+
+    <section class="telemetry" id="telemetry">
+      <h3>Telemetry</h3>
+      <dl id="telemetry-body">
+        <dt>—</dt><dd>waiting…</dd>
+      </dl>
+    </section>
+
+    <p class="meta">
+      IK runs on the device, not the hub.
+      <a href="/docs/INVERSE_KINEMATICS.md">read the math →</a>
+    </p>
+
+  </aside>
+
+</main>
+
+<script src="/js/inspect.js" defer></script>
+</body>
+</html>

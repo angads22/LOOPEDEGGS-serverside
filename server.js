@@ -29,6 +29,10 @@ function saveContacts(contacts) {
 
 const contacts = loadContacts();
 const incubators = new Map();
+// deviceId → WebSocket connection (so the hub can address commands to a device)
+const deviceSockets = new Map();
+// deviceId → { pan, tilt, updatedAt } most recently reported by the device
+const headPoses = new Map();
 
 // ── Middleware ────────────────────────────────────────────────────────────────
 
@@ -63,6 +67,12 @@ app.use('/api/', apiLimiter);
 
 app.use(express.static(path.join(__dirname, 'public'), {
   maxAge: process.env.NODE_ENV === 'production' ? '7d' : 0,
+}));
+
+// Surface the IK docs from /docs/* so the Inspect page can link to them.
+app.use('/docs', express.static(path.join(__dirname, 'docs'), {
+  maxAge: '1d',
+  extensions: ['md'],
 }));
 
 // ── API ───────────────────────────────────────────────────────────────────────
@@ -100,7 +110,7 @@ app.post('/api/contact', contactLimiter, (req, res) => {
 
 // Hub — register a LifeLoop device
 app.post('/api/hub/incubators/register', (req, res) => {
-  const { deviceId, name, location } = req.body;
+  const { deviceId, name, location, streamUrl, capabilities } = req.body;
   if (!deviceId) return res.status(400).json({ error: 'deviceId required' });
 
   const unit = {
@@ -110,6 +120,10 @@ app.post('/api/hub/incubators/register', (req, res) => {
     status: 'online',
     lastSeen: new Date().toISOString(),
     telemetry: null,
+    streamUrl: streamUrl ? String(streamUrl).slice(0, 256) : null,
+    capabilities: Array.isArray(capabilities)
+      ? capabilities.filter(c => typeof c === 'string').slice(0, 16)
+      : [],
   };
 
   incubators.set(unit.deviceId, unit);
@@ -150,6 +164,94 @@ app.post('/api/hub/incubators/:deviceId/telemetry', (req, res) => {
   res.json({ success: true });
 });
 
+// ── Camera & head (Inspect) ───────────────────────────────────────────────────
+//
+//   GET  /api/hub/incubators/:id/camera/stream  → MJPEG proxy from the device
+//   POST /api/hub/incubators/:id/look           → click-to-look (pixel → ray)
+//   POST /api/hub/incubators/:id/head           → manual pan/tilt (radians)
+//   GET  /api/hub/incubators/:id/head           → last reported pose
+//
+// IK is not done here — the hub just relays the command to the device, which
+// owns its own calibration. See docs/INVERSE_KINEMATICS.md.
+
+function sendToDevice(deviceId, payload) {
+  const ws = deviceSockets.get(deviceId);
+  if (!ws || ws.readyState !== 1) return false;
+  ws.send(JSON.stringify(payload));
+  return true;
+}
+
+// Proxy the device's MJPEG stream so browsers don't need direct LAN access
+// to the Pi. The device registers a streamUrl when it comes online.
+app.get('/api/hub/incubators/:deviceId/camera/stream', (req, res) => {
+  const unit = incubators.get(req.params.deviceId);
+  if (!unit?.streamUrl) return res.status(404).json({ error: 'No camera registered for this device' });
+
+  const upstream = http.get(unit.streamUrl, upRes => {
+    res.writeHead(upRes.statusCode || 502, upRes.headers);
+    upRes.pipe(res);
+  });
+
+  upstream.on('error', err => {
+    console.error('[camera proxy]', err.message);
+    if (!res.headersSent) res.status(502).json({ error: 'Camera stream unavailable' });
+    else res.end();
+  });
+
+  req.on('close', () => upstream.destroy());
+});
+
+// Click-to-look: browser sends pixel + frame size, device does the IK.
+app.post('/api/hub/incubators/:deviceId/look', (req, res) => {
+  const unit = incubators.get(req.params.deviceId);
+  if (!unit) return res.status(404).json({ error: 'Not found' });
+
+  const { u, v, frameWidth, frameHeight, relative } = req.body || {};
+  if ([u, v, frameWidth, frameHeight].some(n => typeof n !== 'number')) {
+    return res.status(400).json({ error: 'u, v, frameWidth, frameHeight required (numbers)' });
+  }
+
+  const sent = sendToDevice(unit.deviceId, {
+    type: 'head_target_pixel',
+    u, v, frameWidth, frameHeight,
+    relative: relative !== false,   // default: treat click as a delta from current pose
+  });
+  if (!sent) return res.status(503).json({ error: 'Device offline' });
+  res.json({ success: true });
+});
+
+// Manual pan/tilt in radians (joystick / sliders).
+app.post('/api/hub/incubators/:deviceId/head', (req, res) => {
+  const unit = incubators.get(req.params.deviceId);
+  if (!unit) return res.status(404).json({ error: 'Not found' });
+
+  const { pan, tilt, mode } = req.body || {};
+  if (typeof pan !== 'number' || typeof tilt !== 'number') {
+    return res.status(400).json({ error: 'pan and tilt required (radians)' });
+  }
+  if (!Number.isFinite(pan) || !Number.isFinite(tilt)) {
+    return res.status(400).json({ error: 'pan/tilt must be finite' });
+  }
+  // Mechanical sanity bounds — device clamps further to its own limits.
+  if (Math.abs(pan) > Math.PI || Math.abs(tilt) > Math.PI / 2) {
+    return res.status(400).json({ error: 'pan/tilt out of allowable range' });
+  }
+
+  const sent = sendToDevice(unit.deviceId, {
+    type: 'head_target_angle',
+    pan, tilt,
+    mode: mode === 'absolute' ? 'absolute' : 'relative',
+  });
+  if (!sent) return res.status(503).json({ error: 'Device offline' });
+  res.json({ success: true });
+});
+
+app.get('/api/hub/incubators/:deviceId/head', (req, res) => {
+  const pose = headPoses.get(req.params.deviceId);
+  if (!pose) return res.status(404).json({ error: 'No pose reported yet' });
+  res.json(pose);
+});
+
 // SPA fallback
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
@@ -165,8 +267,44 @@ function broadcast(payload) {
   wss.clients.forEach(client => { if (client.readyState === 1) client.send(msg); });
 }
 
-wss.on('connection', ws => {
-  ws.send(JSON.stringify({ type: 'init', incubators: [...incubators.values()] }));
+wss.on('connection', (ws, req) => {
+  // A device announces itself with `?deviceId=...`; everything else is a browser.
+  const url = new URL(req.url, 'http://placeholder');
+  const deviceId = url.searchParams.get('deviceId');
+
+  if (deviceId && incubators.has(deviceId)) {
+    deviceSockets.set(deviceId, ws);
+    ws.isDevice = true;
+    ws.deviceId = deviceId;
+    console.log(`[ws] device connected: ${deviceId}`);
+  } else {
+    ws.send(JSON.stringify({ type: 'init', incubators: [...incubators.values()] }));
+  }
+
+  ws.on('message', raw => {
+    let msg;
+    try { msg = JSON.parse(raw); } catch { return; }
+
+    // Devices report their current pose so the UI can render the reticle.
+    if (ws.isDevice && msg.type === 'head_pose') {
+      const { pan, tilt } = msg;
+      if (typeof pan === 'number' && typeof tilt === 'number') {
+        const pose = { pan, tilt, updatedAt: new Date().toISOString() };
+        headPoses.set(ws.deviceId, pose);
+        broadcast({ type: 'head_pose', deviceId: ws.deviceId, pose });
+      }
+    }
+  });
+
+  ws.on('close', () => {
+    if (ws.isDevice) {
+      deviceSockets.delete(ws.deviceId);
+      const unit = incubators.get(ws.deviceId);
+      if (unit) { unit.status = 'offline'; broadcast({ type: 'incubator_offline', deviceId: ws.deviceId }); }
+      console.log(`[ws] device disconnected: ${ws.deviceId}`);
+    }
+  });
+
   ws.on('error', err => console.error('[ws]', err.message));
 });
 
